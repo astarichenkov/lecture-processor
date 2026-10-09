@@ -1,0 +1,31 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    restart: unless-stopped
+    # Ollama is only reachable inside the compose network (loopback on host).
+    expose:
+      - "11434"
+    volumes:
+      - ollama-models:/root/.ollama
+    # CPU-only host: no GPU reservation.
+    entrypoint: ["/bin/sh", "-c", "ollama serve"]
+
+  private-ai-chat:
+    build:
+      context: ../..
+      dockerfile: deployment/homelab/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - ollama
+    environment:
+      OLLAMA_BASE_URL: http://ollama:11434
+      CHAT_MODEL: ${CHAT_MODEL:-qwen3:1.7b}
+      CHAT_API_KEY: ${CHAT_API_KEY:?CHAT_API_KEY must be set}
+      CHAT_BIND_ADDRESS: 0.0.0.0
+      CHAT_PORT: "8081"
+    ports:
+      # Bind to a trusted interface only; change 127.0.0.1 to the VPN address.
+      - "127.0.0.1:8081:8081"
+
+volumes:
+  ollama-models:
