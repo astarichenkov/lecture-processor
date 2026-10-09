@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Лекция: ' + ${lecture.originalFilename}">Лекция</title>
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+    <style>
+        body { font-family: system-ui, sans-serif; margin: 2rem; max-width: 1000px; }
+        .status-COMPLETED { color: #0a7d28; font-weight: 600; }
+        .status-FAILED { color: #b00020; font-weight: 600; }
+        .error { background: #fee; color: #b00020; padding: .6rem; }
+        .actions a, .actions form { display: inline-block; margin-right: .6rem; }
+        ul { line-height: 1.8; }
+    </style>
+</head>
+<body>
+<h1 th:text="${lecture.originalFilename}"></h1>
+<a href="/">← К списку</a>
+
+<div th:replace="fragments/status :: status"></div>
+
+<div class="actions">
+    <form method="post" th:action="@{/lectures/{id}/process(id=${lecture.id})}">
+        <button type="submit">Обработать заново</button>
+    </form>
+    <a th:href="@{/lectures/{id}/chat(id=${lecture.id})}">Чат по лекции</a>
+    <form method="post" th:action="@{/lectures/{id}/delete(id=${lecture.id})}">
+        <button type="submit">Удалить</button>
+    </form>
+</div>
+
+<h2>Результаты</h2>
+<ul>
+    <li><a th:href="@{/api/lectures/{id}/download/transcript.json(id=${lecture.id})}">Сырой транскрипт (JSON)</a></li>
+    <li><a th:href="@{/api/lectures/{id}/download/transcript.md(id=${lecture.id})}">Расшифровка (Markdown)</a></li>
+    <li><a th:href="@{/api/lectures/{id}/download/notes.md(id=${lecture.id})}">Конспект (Markdown)</a></li>
+    <li><a th:href="@{/api/lectures/{id}/download/notes.docx(id=${lecture.id})}">Конспект (DOCX)</a></li>
+</ul>
+
+<pre th:if="${lecture.notesMarkdown}"
+     th:text="${lecture.notesMarkdown}"></pre>
+</body>
+</html>

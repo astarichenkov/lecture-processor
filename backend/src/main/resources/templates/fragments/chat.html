@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="answer">
+    <div class="answer" th:text="${answer.text}"></div>
+    <div class="sources" th:if="${!#lists.isEmpty(answer.sources)}">
+        <strong>Источники:</strong>
+        <ul>
+            <li th:each="s : ${answer.sources}"
+                th:text="'фрагмент #' + ${s.chunkSequence} + ', ' + ${s.startMs} + '–' + ${s.endMs} + ' мс: ' + ${s.excerpt}"></li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

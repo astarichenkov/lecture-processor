@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="status" th:attr="hx-get=${lecture.status.terminal ? null : '/lectures/' + lecture.id + '/status'},
+        hx-trigger=${lecture.status.terminal ? null : 'every 3s'}, hx-swap='outerHTML'">
+    <p>Статус: <span th:classappend="'status-' + ${lecture.status}" th:text="${lecture.status}"></span></p>
+    <p th:if="${lecture.durationMs != null}" th:text="'Длительность: ' + ${lecture.durationMs} + ' мс'"></p>
+    <p class="error" th:if="${lecture.errorMessage}" th:text="'Ошибка: ' + ${lecture.errorMessage}"></p>
+</div>
+</body>
+</html>

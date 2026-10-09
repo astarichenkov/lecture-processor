@@ -1,0 +1,50 @@
+# Build output
+target/
+*.class
+*.jar
+*.war
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.settings/
+.project
+.classpath
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Runtime data / local artifacts (never commit models, media, generated docs)
+data/
+uploads/
+output/
+*.mp4
+*.mkv
+*.mov
+*.wav
+*.m4a
+*.bin
+*.gguf
+*.onnx
+
+# Snapshots are generated via git worktree and must not be committed
+snapshots/*
+!snapshots/.gitignore
+
+# Logs
+*.log
+logs/
+
+# Secrets
+.env
+*.local
+secrets.properties
+
+# SQLite databases
+*.db
+*.sqlite
+*.sqlite3

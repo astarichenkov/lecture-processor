@@ -1,0 +1,30 @@
+server:
+  port: ${CHAT_PORT:8081}
+  address: ${CHAT_BIND_ADDRESS:127.0.0.1}
+
+spring:
+  application:
+    name: private-ai-chat
+  thymeleaf:
+    cache: false
+
+app:
+  ollama:
+    base-url: ${OLLAMA_BASE_URL:http://localhost:11434}
+    model: ${CHAT_MODEL:qwen3:1.7b}
+    timeout: 2m
+  security:
+    api-key: ${CHAT_API_KEY:}
+  limits:
+    rate-limit-per-minute: 5
+    max-message-chars: 2000
+    max-context-tokens: 4096
+    max-output-tokens: 512
+    max-history-messages: 8
+    queue-capacity: 10
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info

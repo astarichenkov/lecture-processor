@@ -1,0 +1,71 @@
+package com.lectureprocessor.lecture;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.nio.file.Path;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.mock.web.MockMultipartFile;
+
+import com.lectureprocessor.domain.JobStatus;
+import com.lectureprocessor.domain.Lecture;
+import com.lectureprocessor.repository.LectureRepository;
+import com.lectureprocessor.storage.FileStorageService;
+import com.lectureprocessor.support.TestProperties;
+
+class LectureServiceTest {
+
+    private final LectureRepository repository = mock(LectureRepository.class);
+    private final FileStorageService storage = mock(FileStorageService.class);
+    private final LectureService service = new LectureService(repository, storage,
+            TestProperties.defaults("./target/test-data"));
+
+    @Test
+    void createsLectureForValidUpload() {
+        when(storage.saveSource(anyString(), anyString(), any())).thenReturn(Path.of("source.mp4"));
+        MockMultipartFile file = new MockMultipartFile("file", "lecture.mp4", "video/mp4", new byte[100]);
+
+        Lecture lecture = service.create(file, true, false);
+
+        assertThat(lecture.originalFilename()).isEqualTo("lecture.mp4");
+        assertThat(lecture.status()).isEqualTo(JobStatus.UPLOADED);
+        assertThat(lecture.cleanTranscript()).isTrue();
+        verify(repository).save(any(Lecture.class));
+    }
+
+    @Test
+    void rejectsEmptyUpload() {
+        MockMultipartFile file = new MockMultipartFile("file", "lecture.mp4", "video/mp4", new byte[0]);
+        assertThatThrownBy(() -> service.create(file, false, false))
+                .isInstanceOf(InvalidUploadException.class);
+    }
+
+    @Test
+    void rejectsUnsupportedExtension() {
+        MockMultipartFile file = new MockMultipartFile("file", "document.pdf", "application/pdf", new byte[10]);
+        assertThatThrownBy(() -> service.create(file, false, false))
+                .isInstanceOf(InvalidUploadException.class)
+                .hasMessageContaining("формат");
+    }
+
+    @Test
+    void rejectsTooLargeFile() {
+        byte[] big = new byte[2 * 1024 * 1024];
+        MockMultipartFile file = new MockMultipartFile("file", "lecture.mp4", "video/mp4", big);
+        assertThatThrownBy(() -> service.create(file, false, false))
+                .isInstanceOf(InvalidUploadException.class)
+                .hasMessageContaining("большой");
+    }
+
+    @Test
+    void sanitizesFilename() {
+        assertThat(LectureService.sanitizeFilename("../../etc/passwd.mp4")).isEqualTo("passwd.mp4");
+        assertThat(LectureService.sanitizeFilename("Моя лекция №1.mp4")).contains(".mp4");
+    }
+}

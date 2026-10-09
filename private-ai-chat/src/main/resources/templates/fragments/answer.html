@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="answer">
+    <p class="question" th:if="${question}" th:text="'Вы: ' + ${question}"></p>
+    <div class="answer" th:if="${answer}" th:text="${answer}"></div>
+    <p class="error" th:if="${error}" th:text="${error}"></p>
+</div>
+</body>
+</html>

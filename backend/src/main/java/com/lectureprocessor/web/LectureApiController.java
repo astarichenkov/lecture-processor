@@ -1,0 +1,155 @@
+package com.lectureprocessor.web;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.lectureprocessor.chat.LectureChatService;
+import com.lectureprocessor.domain.ChatMessage;
+import com.lectureprocessor.domain.Lecture;
+import com.lectureprocessor.domain.RagAnswer;
+import com.lectureprocessor.domain.Slide;
+import com.lectureprocessor.job.LectureJobService;
+import com.lectureprocessor.lecture.LectureService;
+import com.lectureprocessor.lecture.LectureNotFoundException;
+import com.lectureprocessor.repository.SlideRepository;
+import com.lectureprocessor.storage.FileStorageService;
+
+/**
+ * REST API for lectures: upload, status, processing and artifact downloads.
+ */
+@RestController
+@RequestMapping("/api/lectures")
+public class LectureApiController {
+
+    private final LectureService lectureService;
+    private final LectureJobService jobService;
+    private final LectureChatService chatService;
+    private final SlideRepository slideRepository;
+    private final FileStorageService storage;
+
+    public LectureApiController(LectureService lectureService, LectureJobService jobService,
+            LectureChatService chatService, SlideRepository slideRepository, FileStorageService storage) {
+        this.lectureService = lectureService;
+        this.jobService = jobService;
+        this.chatService = chatService;
+        this.slideRepository = slideRepository;
+        this.storage = storage;
+    }
+
+    @GetMapping
+    public List<Lecture> list() {
+        return lectureService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Lecture get(@PathVariable String id) {
+        return lectureService.getRequired(id);
+    }
+
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public Lecture upload(@RequestParam("file") MultipartFile file,
+            @RequestParam(name = "clean", defaultValue = "false") boolean clean,
+            @RequestParam(name = "slides", defaultValue = "false") boolean slides) {
+        return lectureService.create(file, clean, slides);
+    }
+
+    @PostMapping("/{id}/process")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Map<String, Object> process(@PathVariable String id) {
+        lectureService.getRequired(id);
+        boolean submitted = jobService.submit(id);
+        return Map.of("submitted", submitted, "lectureId", id);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable String id) {
+        lectureService.delete(id);
+    }
+
+    @GetMapping("/{id}/slides")
+    public List<Slide> slides(@PathVariable String id) {
+        return slideRepository.findByLecture(id);
+    }
+
+    @GetMapping("/{id}/slides/{index}/image")
+    public ResponseEntity<Resource> slideImage(@PathVariable String id, @PathVariable int index) {
+        List<Slide> slides = slideRepository.findByLecture(id);
+        Slide slide = slides.stream().filter(s -> s.sequence() == index).findFirst()
+                .orElseThrow(() -> new LectureNotFoundException(id + "/slide/" + index));
+        return file(Path.of(slide.imagePath()), MediaType.IMAGE_JPEG);
+    }
+
+    @GetMapping("/{id}/chat")
+    public List<ChatMessage> chatHistory(@PathVariable String id,
+            @RequestParam("session") String session) {
+        return chatService.history(id, session);
+    }
+
+    @PostMapping("/{id}/chat")
+    public RagAnswer chat(@PathVariable String id, @RequestParam("session") String session,
+            @RequestParam("question") String question) {
+        return chatService.ask(id, session, question);
+    }
+
+    @DeleteMapping("/{id}/chat")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void clearChat(@PathVariable String id, @RequestParam("session") String session) {
+        chatService.clear(id, session);
+    }
+
+    @GetMapping("/{id}/download/{artifact}")
+    public ResponseEntity<Resource> download(@PathVariable String id,
+            @PathVariable String artifact) {
+        Lecture lecture = lectureService.getRequired(id);
+        String relative = switch (artifact) {
+            case "transcript.json" -> "transcript.json";
+            case "transcript.md" -> "transcript.md";
+            case "notes.md" -> "notes.md";
+            case "notes.docx" -> "notes.docx";
+            default -> throw new IllegalArgumentException("Неизвестный артефакт: " + artifact);
+        };
+        Path path = storage.resolve(lecture.id(), relative);
+        if (!Files.exists(path)) {
+            throw new LectureNotFoundException("Артефакт ещё не создан: " + artifact);
+        }
+        MediaType type = artifact.endsWith(".docx")
+                ? MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+                : artifact.endsWith(".json") ? MediaType.APPLICATION_JSON : MediaType.TEXT_MARKDOWN;
+        return file(path, type);
+    }
+
+    private static ResponseEntity<Resource> file(Path path, MediaType type) {
+        Resource resource = new FileSystemResource(path);
+        try {
+            return ResponseEntity.ok()
+                    .contentType(type)
+                    .contentLength(Files.size(path))
+                    .header(HttpHeaders.CONTENT_DISPOSITION,
+                            "attachment; filename=\"" + path.getFileName() + "\"")
+                    .body(resource);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resource);
+        }
+    }
+}

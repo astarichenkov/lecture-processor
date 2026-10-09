@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Private AI Chat</title>
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+    <style>
+        body { font-family: system-ui, sans-serif; margin: 2rem; max-width: 800px; }
+        textarea { width: 100%; height: 4rem; }
+        .answer { border: 1px solid #ccc; padding: 1rem; margin-top: 1rem; white-space: pre-wrap; }
+        .question { color: #555; }
+        .error { color: #b00020; }
+    </style>
+</head>
+<body>
+<h1>Приватный локальный чат</h1>
+<p>Модель: <span th:text="${model}"></span> (работает локально через Ollama)</p>
+
+<form th:attr="hx-post='/chat'" hx-target="#answer" hx-swap="innerHTML">
+    <input type="hidden" name="session" th:value="${sessionId}"/>
+    <textarea name="message" maxlength="2000" placeholder="Напишите сообщение..." required></textarea>
+    <button type="submit">Отправить</button>
+</form>
+
+<form method="post" action="/chat/clear">
+    <input type="hidden" name="session" th:value="${sessionId}"/>
+    <button type="submit">Очистить диалог</button>
+</form>
+
+<div id="answer"><p>Ответ появится здесь.</p></div>
+</body>
+</html>

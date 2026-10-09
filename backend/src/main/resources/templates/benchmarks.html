@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Бенчмарки LLM</title>
+    <style>
+        body { font-family: system-ui, sans-serif; margin: 2rem; max-width: 1000px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: .4rem .6rem; text-align: left; }
+    </style>
+</head>
+<body>
+<h1>Бенчмарки локальных LLM</h1>
+<a href="/">← К лекциям</a>
+<p th:text="'Источник: ' + ${config.sourceName}"></p>
+<table>
+    <thead>
+    <tr><th>ID</th><th>Модель</th><th>Контекст</th><th>Prompt</th><th>Описание</th></tr>
+    </thead>
+    <tbody>
+    <tr th:each="c : ${config.configurations}">
+        <td th:text="${c.id}"></td>
+        <td th:text="${c.model}"></td>
+        <td th:text="${c.numCtx}"></td>
+        <td th:text="${c.promptTemplate}"></td>
+        <td th:text="${c.description}"></td>
+    </tr>
+    </tbody>
+</table>
+<p>Запуск: <code>POST /api/benchmarks/run?lectureId=&lt;id&gt;</code>. Результаты сохраняются в
+    <code>&lt;storage&gt;/benchmarks/&lt;timestamp&gt;/</code> (JSON/CSV/Markdown).</p>
+</body>
+</html>

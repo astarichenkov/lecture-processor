@@ -1,0 +1,68 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: lecture-processor
+  datasource:
+    url: jdbc:sqlite:${app.storage.root}/lecture-processor.db
+    driver-class-name: org.sqlite.JDBC
+    hikari:
+      maximum-pool-size: 1
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:db/schema.sql
+  servlet:
+    multipart:
+      max-file-size: 4GB
+      max-request-size: 4GB
+  thymeleaf:
+    cache: false
+
+app:
+  tools:
+    ffmpeg-path: ${FFMPEG_PATH:ffmpeg}
+    ffprobe-path: ${FFPROBE_PATH:ffprobe}
+    whisper-path: ${WHISPER_PATH:whisper-cli}
+    whisper-model-path: ${WHISPER_MODEL_PATH:}
+    whisper-language: ru
+    timeout: 2h
+  storage:
+    root: ${LECTURE_STORAGE_ROOT:./data}
+  upload:
+    max-file-size-bytes: 4294967296
+  processing:
+    worker-threads: 2
+    queue-capacity: 20
+    llm-chunk-chars: 6000
+    llm-chunk-overlap-chars: 400
+    max-chunks-per-lecture: 200
+  ollama:
+    base-url: ${OLLAMA_BASE_URL:http://localhost:11434}
+    chat-model: ${OLLAMA_CHAT_MODEL:qwen3:4b}
+    embedding-model: ${OLLAMA_EMBEDDING_MODEL:nomic-embed-text}
+    embedding-dimensions: 768
+    timeout: 10m
+  slides:
+    interval-seconds: 30
+    max-images: 40
+    hash-distance-threshold: 6
+  chat:
+    max-history-messages: 10
+    max-question-chars: 2000
+    retrieval-top-k: 5
+    min-similarity: 0.2
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when-authorized
+
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n"
