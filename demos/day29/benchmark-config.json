@@ -1,0 +1,46 @@
+{
+  "sourceName": "sample-lecture",
+  "keyFacts": ["вектор", "скалярное произведение", "перпендикулярны", "косинус"],
+  "configurations": [
+    {
+      "id": "A-qwen3-4b-4096-basic",
+      "model": "qwen3:4b",
+      "quantization": "Q4_K_M (default ollama tag)",
+      "numCtx": 4096,
+      "temperature": 0.2,
+      "maxTokens": 1024,
+      "promptTemplate": "basic-summary-v1",
+      "description": "Qwen3 4B, context 4096, basic prompt"
+    },
+    {
+      "id": "B-qwen3-4b-4096-notes",
+      "model": "qwen3:4b",
+      "quantization": "Q4_K_M (default ollama tag)",
+      "numCtx": 4096,
+      "temperature": 0.2,
+      "maxTokens": 1024,
+      "promptTemplate": "structured-notes-v1",
+      "description": "Qwen3 4B, context 4096, specialized prompt"
+    },
+    {
+      "id": "C-qwen3-4b-8192-notes",
+      "model": "qwen3:4b",
+      "quantization": "Q4_K_M (default ollama tag)",
+      "numCtx": 8192,
+      "temperature": 0.2,
+      "maxTokens": 1024,
+      "promptTemplate": "structured-notes-v1",
+      "description": "Qwen3 4B, context 8192, specialized prompt"
+    },
+    {
+      "id": "D-qwen3-8b-4096-notes",
+      "model": "qwen3:8b",
+      "quantization": "Q4_K_M (default ollama tag)",
+      "numCtx": 4096,
+      "temperature": 0.2,
+      "maxTokens": 1024,
+      "promptTemplate": "structured-notes-v1",
+      "description": "Qwen3 8B, context 4096, specialized prompt"
+    }
+  ]
+}
