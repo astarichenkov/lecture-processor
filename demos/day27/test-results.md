@@ -32,8 +32,8 @@ Irina") wrapped into a 45 s MP4 — no copyrighted/user media.
 | MP4 → WAV | FFmpeg 9.0.2 | **PASS** (16 kHz mono) |
 | WAV → transcript.json | whisper.cpp real, `-l ru` | **PASS** (6 segments, 0–38.6 s) |
 | JSON parsing | app parser | **PASS** |
-| LLM (Ollama/Qwen3) | Ollama | **BLOCKED — not installed (disk)** |
-| notes.md / notes.docx | Apache POI pipeline | **PASS** (LLM via documented test double) |
+| LLM (Ollama/Qwen3 4B) | Ollama 0.40.2, real model | **PASS** (2 runs, job COMPLETED) |
+| notes.md / notes.docx | Apache POI pipeline | **PASS** (meaningful Russian content) |
 
 ### Verified end-to-end through the running app
 
@@ -65,8 +65,8 @@ Artifacts under `target/e2e-data/lectures/<id>/`:
 | Compile / tests | PASS (61) |
 | Real FFmpeg audio extraction | PASS |
 | Real whisper.cpp Russian transcription | PASS |
-| Real Ollama/Qwen3 generation | BLOCKED (insufficient disk) |
-| Full MP4→DOCX pipeline wiring | PASS (LLM via test double, labelled) |
+| Real Ollama/Qwen3 4B generation | **PASS** (2026-10-11) |
+| Full MP4→DOCX real AI pipeline | **PASS** (job COMPLETED) |
 
-Details: `docs/day27-runtime-audit.md`. A real AI E2E must be run on a host
-with enough free disk; it is **not** claimed here.
+Details: `docs/DAY27_REAL_INTEGRATION_REPORT.md` and `docs/day27-runtime-audit.md`.
+A mock/test double is no longer used for verification.
