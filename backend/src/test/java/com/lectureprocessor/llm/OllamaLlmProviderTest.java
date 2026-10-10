@@ -24,7 +24,7 @@ class OllamaLlmProviderTest {
         AppProperties base = TestProperties.defaults("./target/test-data");
         AppProperties props = new AppProperties(
                 base.tools(), base.storage(), base.upload(), base.processing(),
-                new AppProperties.Ollama(CLOSED, "qwen3:4b", "nomic-embed-text", 768, Duration.ofSeconds(2)),
+                new AppProperties.Ollama(CLOSED, "qwen3:4b", "nomic-embed-text", 768, Duration.ofSeconds(2), true),
                 base.slides(), base.chat());
         return new OllamaLlmProvider(props);
     }

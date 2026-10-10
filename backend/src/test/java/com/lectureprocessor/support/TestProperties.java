@@ -19,7 +19,7 @@ public final class TestProperties {
                 new AppProperties.Upload(1024L * 1024L),
                 new AppProperties.Processing(2, 10, 200, 20, 50),
                 new AppProperties.Ollama("http://localhost:11434", "fake-model", "fake-embed", 32,
-                        Duration.ofMinutes(1)),
+                        Duration.ofMinutes(1), true),
                 new AppProperties.Slides(30.0, 10, 6),
                 new AppProperties.Chat(4, 2000, 5, 0.0));
     }

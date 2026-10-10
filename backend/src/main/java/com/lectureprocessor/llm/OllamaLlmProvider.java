@@ -38,6 +38,7 @@ public class OllamaLlmProvider implements LlmProvider {
     private final OllamaChatModel chatModel;
     private final OllamaEmbeddingModel embeddingModel;
     private final RestClient healthClient;
+    private final boolean disableThinking;
 
     public OllamaLlmProvider(AppProperties properties) {
         this.properties = properties;
@@ -52,12 +53,16 @@ public class OllamaLlmProvider implements LlmProvider {
                 .baseUrl(ollama.baseUrl())
                 .restClientBuilder(RestClient.builder().requestFactory(ollamaHttp))
                 .build();
+        this.disableThinking = ollama.disableThinking();
+        OllamaChatOptions.Builder defaultOptions = OllamaChatOptions.builder()
+                .model(ollama.chatModel())
+                .numCtx(8192);
+        if (disableThinking) {
+            defaultOptions.disableThinking();
+        }
         this.chatModel = OllamaChatModel.builder()
                 .ollamaApi(ollamaApi)
-                .options(OllamaChatOptions.builder()
-                        .model(ollama.chatModel())
-                        .numCtx(4096)
-                        .build())
+                .options(defaultOptions.build())
                 .retryTemplate(noRetry)
                 .build();
         this.embeddingModel = OllamaEmbeddingModel.builder()
@@ -84,13 +89,17 @@ public class OllamaLlmProvider implements LlmProvider {
     public String chat(String systemPrompt, String userPrompt, LlmOptions options) {
         try {
             ChatClient client = ChatClient.create(chatModel);
+            OllamaChatOptions.Builder requestOptions = OllamaChatOptions.builder()
+                    .model(options.model())
+                    .temperature(options.temperature())
+                    .numCtx(options.numCtx())
+                    .numPredict(options.maxTokens())
+                    .seed(options.seed());
+            if (disableThinking) {
+                requestOptions.disableThinking();
+            }
             String content = client.prompt()
-                    .options(OllamaChatOptions.builder()
-                            .model(options.model())
-                            .temperature(options.temperature())
-                            .numCtx(options.numCtx())
-                            .numPredict(options.maxTokens())
-                            .seed(options.seed()))
+                    .options(requestOptions)
                     .system(systemPrompt == null ? "" : systemPrompt)
                     .user(userPrompt)
                     .call()

@@ -47,7 +47,8 @@ public record AppProperties(
             String chatModel,
             String embeddingModel,
             int embeddingDimensions,
-            Duration timeout) {
+            Duration timeout,
+            boolean disableThinking) {
     }
 
     public record Slides(

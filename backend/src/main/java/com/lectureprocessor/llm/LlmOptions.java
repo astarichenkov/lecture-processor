@@ -11,8 +11,13 @@ public record LlmOptions(
         Integer numCtx,
         Integer seed) {
 
+    /**
+     * Default generation options. {@code maxTokens} must be large enough that
+     * qwen3's reasoning tokens do not starve the final answer, and
+     * {@code numCtx} must hold the prompt plus that budget.
+     */
     public static LlmOptions of(String model) {
-        return new LlmOptions(model, 0.2, 1024, 4096, 42);
+        return new LlmOptions(model, 0.2, 6144, 8192, 42);
     }
 
     public LlmOptions withModel(String newModel) {

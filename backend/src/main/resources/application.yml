@@ -43,7 +43,11 @@ app:
     chat-model: ${OLLAMA_CHAT_MODEL:qwen3:4b}
     embedding-model: ${OLLAMA_EMBEDDING_MODEL:nomic-embed-text}
     embedding-dimensions: 768
-    timeout: 10m
+    timeout: ${OLLAMA_TIMEOUT:60m}
+    # For qwen3:4b on Ollama, think:false makes the model leak chain-of-thought into
+    # `content`. Keep thinking ENABLED: Ollama then separates reasoning into
+    # `message.thinking` (ignored) and the clean answer into `message.content`.
+    disable-thinking: ${OLLAMA_DISABLE_THINKING:false}
   slides:
     interval-seconds: 30
     max-images: 40
