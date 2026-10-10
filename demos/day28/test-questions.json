@@ -1,17 +1,154 @@
 {
-  "lecture": "sample-lecture",
+  "meta": {
+    "lecture": "sample-lecture-ru-long.mp4",
+    "language": "ru",
+    "chunking": "300 chars / 60 overlap (evaluation config)",
+    "chunk_map": {
+      "0": "0-22760ms: intro, вектор, модуль, коллинеарные",
+      "1": "17120-36600ms: коллинеарные, скалярное произведение, перпендикулярность",
+      "2": "31200-52480ms: перпендикулярность, векторное произведение, смешанное произведение",
+      "3": "47560-70480ms: смешанное произведение, применения, МО, косинусная близость",
+      "4": "66280-81800ms: косинусная близость, нормализация, вывод"
+    },
+    "note": "Expectations fixed before running evaluation; not adjusted to obtained answers."
+  },
   "questions": [
-    { "id": 1, "type": "direct", "question": "Что такое вектор?", "expected": "Направленный отрезок, характеризующийся длиной и направлением." },
-    { "id": 2, "type": "direct", "question": "Что такое нулевой вектор?", "expected": "Вектор нулевой длины, не имеющий направления." },
-    { "id": 3, "type": "direct", "question": "Чему равно скалярное произведение двух векторов?", "expected": "Произведению их длин на косинус угла между ними." },
-    { "id": 4, "type": "direct", "question": "Когда векторы перпендикулярны?", "expected": "Когда их скалярное произведение равно нулю." },
-    { "id": 5, "type": "direct", "question": "Что даёт векторное произведение?", "expected": "Вектор, перпендикулярный обоим исходным векторам." },
-    { "id": 6, "type": "multi-chunk", "question": "Как векторы связаны с машинным обучением?", "expected": "Признаки объекта представляют вектором признаков; косинусная близость сравнивает векторные представления." },
-    { "id": 7, "type": "multi-chunk", "question": "Где применяются векторы на практике?", "expected": "В физике, компьютерной графике и машинном обучении." },
-    { "id": 8, "type": "terminology", "question": "Какие векторы называются коллинеарными?", "expected": "Лежащие на параллельных прямых." },
-    { "id": 9, "type": "terminology", "question": "Что такое косинусная близость?", "expected": "Мера сходства векторных представлений через косинус угла." },
-    { "id": 10, "type": "follow-up", "question": "А как это используется для текстов?", "expected": "Для сравнения векторных представлений текстов." },
-    { "id": 11, "type": "unanswerable", "question": "Какая сегодня погода в Москве?", "expected": "В лекции нет информации — корректный отказ." },
-    { "id": 12, "type": "unanswerable", "question": "Кто автор этой лекции?", "expected": "В лекции нет информации — корректный отказ." }
+    {
+      "id": "A1",
+      "type": "direct",
+      "session": "s-direct",
+      "question": "Что такое вектор?",
+      "expected_concept": "направленный отрезок, характеризуется длиной и направлением",
+      "gold_chunks": [0],
+      "answerable": true
+    },
+    {
+      "id": "A2",
+      "type": "direct",
+      "session": "s-direct",
+      "question": "Что называется модулем вектора?",
+      "expected_concept": "длина вектора",
+      "gold_chunks": [0],
+      "answerable": true
+    },
+    {
+      "id": "A3",
+      "type": "direct",
+      "session": "s-direct",
+      "question": "Чему равно скалярное произведение двух векторов?",
+      "expected_concept": "произведению их длин на косинус угла между ними",
+      "gold_chunks": [1],
+      "answerable": true
+    },
+    {
+      "id": "A4",
+      "type": "direct",
+      "session": "s-direct",
+      "question": "Чему равно смешанное произведение трёх векторов?",
+      "expected_concept": "объёму параллелепипеда, построенного на этих векторах",
+      "gold_chunks": [2, 3],
+      "answerable": true
+    },
+    {
+      "id": "A5",
+      "type": "direct",
+      "session": "s-direct",
+      "question": "Когда два вектора перпендикулярны?",
+      "expected_concept": "когда их скалярное произведение равно нулю",
+      "gold_chunks": [1, 2],
+      "answerable": true
+    },
+    {
+      "id": "B1",
+      "type": "multi-chunk",
+      "session": "s-multi",
+      "question": "Где применяются векторы на практике?",
+      "expected_concept": "в физике, компьютерной графике и машинном обучении",
+      "gold_chunks": [3],
+      "answerable": true
+    },
+    {
+      "id": "B2",
+      "type": "multi-chunk",
+      "session": "s-multi",
+      "question": "Как векторы используются в машинном обучении и что такое косинусная близость?",
+      "expected_concept": "признаки объекта — вектор признаков; косинусная близость сравнивает векторные представления текстов",
+      "gold_chunks": [3, 4],
+      "answerable": true
+    },
+    {
+      "id": "C1",
+      "type": "terminology",
+      "session": "s-term",
+      "question": "Какие векторы называются коллинеарными?",
+      "expected_concept": "лежащие на параллельных прямых",
+      "gold_chunks": [0, 1],
+      "answerable": true
+    },
+    {
+      "id": "C2",
+      "type": "terminology",
+      "session": "s-term",
+      "question": "Что такое векторное произведение?",
+      "expected_concept": "вектор, перпендикулярный обоим исходным; его длина равна площади параллелограмма",
+      "gold_chunks": [2],
+      "answerable": true
+    },
+    {
+      "id": "C3",
+      "type": "terminology",
+      "session": "s-term",
+      "question": "Что такое косинусная близость?",
+      "expected_concept": "мера сравнения векторных представлений (текстов) через косинус",
+      "gold_chunks": [3, 4],
+      "answerable": true
+    },
+    {
+      "id": "D1",
+      "type": "follow-up",
+      "session": "s-multi",
+      "follow_up_of": "B2",
+      "question": "А зачем при этом нужна нормализация?",
+      "expected_concept": "нормализация приводит длину вектора к единице",
+      "gold_chunks": [4],
+      "answerable": true
+    },
+    {
+      "id": "D2",
+      "type": "follow-up",
+      "session": "s-direct",
+      "follow_up_of": "A1",
+      "question": "А как называется его длина?",
+      "expected_concept": "модуль вектора",
+      "gold_chunks": [0],
+      "answerable": true
+    },
+    {
+      "id": "E1",
+      "type": "unanswerable",
+      "session": "s-noans",
+      "question": "Какая сегодня погода в Москве?",
+      "expected_concept": "в лекции нет информации — корректный отказ",
+      "gold_chunks": [],
+      "answerable": false
+    },
+    {
+      "id": "E2",
+      "type": "unanswerable",
+      "session": "s-noans",
+      "question": "Кто автор этой лекции и в каком году она была прочитана?",
+      "expected_concept": "в лекции нет информации — корректный отказ",
+      "gold_chunks": [],
+      "answerable": false
+    },
+    {
+      "id": "E3",
+      "type": "unanswerable",
+      "session": "s-noans",
+      "question": "Сколько стоит видеокарта RTX 3050?",
+      "expected_concept": "в лекции нет информации — корректный отказ",
+      "gold_chunks": [],
+      "answerable": false
+    }
   ]
 }

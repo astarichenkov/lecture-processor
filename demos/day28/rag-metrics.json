@@ -1,0 +1,28 @@
+{
+  "run": "qwen3:1.7b think=false topK=5 (canonical)",
+  "answerable": 12,
+  "unanswerable": 3,
+  "recall@1": 0.75,
+  "recall@3": 0.9167,
+  "recall@5": 1.0,
+  "source_correctness_topK5": 1.0,
+  "grounded_answer_pass_rate": 1.0,
+  "no_answer_rejection_accuracy": 1.0,
+  "rag_latency_ms": {
+    "avg": 722,
+    "median": 591,
+    "min": 412,
+    "max": 1231
+  },
+  "baseline_latency_ms": {
+    "avg": 2679,
+    "median": 2614
+  },
+  "embedding_latency_ms": {
+    "after_idle_first_ms": 1864,
+    "warm_ms": 320,
+    "note": "External /api/embed probe; app-internal RAG latency already includes warm embedding."
+  },
+  "baseline_answerable_pass_rate": 0.8333,
+  "baseline_noanswer_refusal_rate": 0.0
+}

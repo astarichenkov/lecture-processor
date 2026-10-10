@@ -34,7 +34,25 @@ class RagServiceTest {
         assertThat(answer.sources()).hasSize(1);
         assertThat(answer.sources().getFirst().chunkId()).isEqualTo(7);
         assertThat(answer.sources().getFirst().startMs()).isEqualTo(10_000);
+        assertThat(answer.sources().getFirst().score()).isEqualTo(0.9);
         assertThat(answer.sources().getFirst().excerpt()).contains("Вектор");
+    }
+
+    @Test
+    void clearsSourcesAndGroundedFlagWhenModelRefuses() {
+        LectureChunk chunk = new LectureChunk(7, "L1", 3, 10_000, 20_000,
+                "Вектор — это направленный отрезок.", FakeLlmProvider.embedOne("погода"));
+        when(retrieval.retrieve("L1", "какая погода"))
+                .thenReturn(List.of(new ScoredChunk(chunk, 0.71)));
+        llm.setChatFunction((system, user) ->
+                "Информации о погоде в предоставленных источниках нет.");
+
+        RagAnswer answer = service.answer("L1", "lecture.mp4", "какая погода", List.of(),
+                LlmOptions.of("fake-model"));
+
+        assertThat(answer.grounded()).isFalse();
+        assertThat(answer.sources()).isEmpty();
+        assertThat(answer.text()).contains("нет");
     }
 
     @Test

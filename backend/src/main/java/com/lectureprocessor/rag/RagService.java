@@ -51,7 +51,7 @@ public class RagService {
                     .append(Transcript.formatTimestamp(chunk.endMs())).append(") ")
                     .append(chunk.text()).append("\n\n");
             sources.add(new SourceRef(lectureId, lectureFilename, chunk.id(), chunk.sequence(),
-                    chunk.startMs(), chunk.endMs(), excerpt(chunk.text())));
+                    chunk.startMs(), chunk.endMs(), scored.score(), excerpt(chunk.text())));
         }
 
         StringBuilder user = new StringBuilder();
@@ -66,6 +66,12 @@ public class RagService {
         String answer = llm.chat(prompts.get(PromptTemplates.RAG_ANSWER), user.toString(), options).strip();
         if (answer.isBlank()) {
             return RagAnswer.noEvidence();
+        }
+        // The model may honestly refuse when the retrieved context does not
+        // contain the answer. In that case the answer is NOT grounded: drop the
+        // retrieval metadata so no fabricated sources or timestamps are shipped.
+        if (NoEvidenceDetector.isRefusal(answer)) {
+            return new RagAnswer(answer, List.of(), false);
         }
         return new RagAnswer(answer, sources, true);
     }

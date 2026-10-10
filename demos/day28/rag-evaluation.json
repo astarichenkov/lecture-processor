@@ -1,0 +1,1758 @@
+{
+  "model": "qwen3:1.7b",
+  "think": false,
+  "topK": 5,
+  "results": [
+    {
+      "id": "A1",
+      "type": "direct",
+      "session": "s-direct",
+      "question": "Что такое вектор?",
+      "answerable": true,
+      "expected_concept": "направленный отрезок, характеризуется длиной и направлением",
+      "gold_chunks": [
+        0
+      ],
+      "gold_rank": 1,
+      "top_chunks": [
+        {
+          "seq": 0,
+          "chunkId": 6,
+          "start": 0,
+          "end": 22760,
+          "score": 0.7515
+        },
+        {
+          "seq": 4,
+          "chunkId": 10,
+          "start": 66280,
+          "end": 81800,
+          "score": 0.7513
+        },
+        {
+          "seq": 2,
+          "chunkId": 8,
+          "start": 31200,
+          "end": 52480,
+          "score": 0.748
+        },
+        {
+          "seq": 1,
+          "chunkId": 7,
+          "start": 17120,
+          "end": 36600,
+          "score": 0.7268
+        },
+        {
+          "seq": 3,
+          "chunkId": 9,
+          "start": 47560,
+          "end": 70480,
+          "score": 0.6893
+        }
+      ],
+      "all_scores": [
+        {
+          "seq": 0,
+          "score": 0.7515
+        },
+        {
+          "seq": 4,
+          "score": 0.7513
+        },
+        {
+          "seq": 2,
+          "score": 0.748
+        },
+        {
+          "seq": 1,
+          "score": 0.7268
+        },
+        {
+          "seq": 3,
+          "score": 0.6893
+        }
+      ],
+      "rag_answer": "Вектор — это направленный отрезок, который характеризуется длиной и направлением. Его модуль (длина) определяется как расстояние от начала до конца вектора.",
+      "rag_grounded_flag": true,
+      "rag_sources": [
+        {
+          "seq": 0,
+          "chunkId": 6,
+          "start": 0,
+          "end": 22760,
+          "score": 0.751494372575615
+        },
+        {
+          "seq": 4,
+          "chunkId": 10,
+          "start": 66280,
+          "end": 81800,
+          "score": 0.7512962894862524
+        },
+        {
+          "seq": 2,
+          "chunkId": 8,
+          "start": 31200,
+          "end": 52480,
+          "score": 0.7479575756853091
+        },
+        {
+          "seq": 1,
+          "chunkId": 7,
+          "start": 17120,
+          "end": 36600,
+          "score": 0.7267743021882018
+        },
+        {
+          "seq": 3,
+          "chunkId": 9,
+          "start": 47560,
+          "end": 70480,
+          "score": 0.6892561358403209
+        }
+      ],
+      "baseline_answer": "Вектор — это направленный отрезок прямой, который имеет величину (модуль) и направление. Вектор можно представить как пара точек (начало и конец) или как числа (векторы в пространстве).",
+      "concept_coverage": 1.0,
+      "rag_pass": true,
+      "source_ok": true,
+      "is_refusal": false,
+      "baseline_refusal": false,
+      "latency": {
+        "embeddingMs": 2126,
+        "ragMs": 819,
+        "baselineMs": 2739,
+        "ragEvalCount": null,
+        "baselineEvalCount": 59,
+        "baselinePromptEvalCount": 58
+      }
+    },
+    {
+      "id": "A2",
+      "type": "direct",
+      "session": "s-direct",
+      "question": "Что называется модулем вектора?",
+      "answerable": true,
+      "expected_concept": "длина вектора",
+      "gold_chunks": [
+        0
+      ],
+      "gold_rank": 1,
+      "top_chunks": [
+        {
+          "seq": 0,
+          "chunkId": 6,
+          "start": 0,
+          "end": 22760,
+          "score": 0.8005
+        },
+        {
+          "seq": 1,
+          "chunkId": 7,
+          "start": 17120,
+          "end": 36600,
+          "score": 0.7817
+        },
+        {
+          "seq": 2,
+          "chunkId": 8,
+          "start": 31200,
+          "end": 52480,
+          "score": 0.7687
+        },
+        {
+          "seq": 4,
+          "chunkId": 10,
+          "start": 66280,
+          "end": 81800,
+          "score": 0.7581
+        },
+        {
+          "seq": 3,
+          "chunkId": 9,
+          "start": 47560,
+          "end": 70480,
+          "score": 0.6801
+        }
+      ],
+      "all_scores": [
+        {
+          "seq": 0,
+          "score": 0.8005
+        },
+        {
+          "seq": 1,
+          "score": 0.7817
+        },
+        {
+          "seq": 2,
+          "score": 0.7687
+        },
+        {
+          "seq": 4,
+          "score": 0.7581
+        },
+        {
+          "seq": 3,
+          "score": 0.6801
+        }
+      ],
+      "rag_answer": "Модуль вектора — это его длина, то есть расстояние от начала до конца вектора.",
+      "rag_grounded_flag": true,
+      "rag_sources": [
+        {
+          "seq": 0,
+          "chunkId": 6,
+          "start": 0,
+          "end": 22760,
+          "score": 0.8005103425974425
+        },
+        {
+          "seq": 1,
+          "chunkId": 7,
+          "start": 17120,
+          "end": 36600,
+          "score": 0.7816525310083275
+        },
+        {
+          "seq": 2,
+          "chunkId": 8,
+          "start": 31200,
+          "end": 52480,
+          "score": 0.7687079085998674
+        },
+        {
+          "seq": 4,
+          "chunkId": 10,
+          "start": 66280,
+          "end": 81800,
+          "score": 0.7580934829790658
+        },
+        {
+          "seq": 3,
+          "chunkId": 9,
+          "start": 47560,
+          "end": 70480,
+          "score": 0.6800576870824758
+        }
+      ],
+      "baseline_answer": "Модулем вектора называется его длиной или абсолютным значением.",
+      "concept_coverage": 1.0,
+      "rag_pass": true,
+      "source_ok": true,
+      "is_refusal": false,
+      "baseline_refusal": false,
+      "latency": {
+        "embeddingMs": 2062,
+        "ragMs": 468,
+        "baselineMs": 2440,
+        "ragEvalCount": null,
+        "baselineEvalCount": 20,
+        "baselinePromptEvalCount": 63
+      }
+    },
+    {
+      "id": "A3",
+      "type": "direct",
+      "session": "s-direct",
+      "question": "Чему равно скалярное произведение двух векторов?",
+      "answerable": true,
+      "expected_concept": "произведению их длин на косинус угла между ними",
+      "gold_chunks": [
+        1
+      ],
+      "gold_rank": 2,
+      "top_chunks": [
+        {
+          "seq": 2,
+          "chunkId": 8,
+          "start": 31200,
+          "end": 52480,
+          "score": 0.8586
+        },
+        {
+          "seq": 1,
+          "chunkId": 7,
+          "start": 17120,
+          "end": 36600,
+          "score": 0.8528
+        },
+        {
+          "seq": 0,
+          "chunkId": 6,
+          "start": 0,
+          "end": 22760,
+          "score": 0.7969
+        },
+        {
+          "seq": 4,
+          "chunkId": 10,
+          "start": 66280,
+          "end": 81800,
+          "score": 0.7944
+        },
+        {
+          "seq": 3,
+          "chunkId": 9,
+          "start": 47560,
+          "end": 70480,
+          "score": 0.7819
+        }
+      ],
+      "all_scores": [
+        {
+          "seq": 2,
+          "score": 0.8586
+        },
+        {
+          "seq": 1,
+          "score": 0.8528
+        },
+        {
+          "seq": 0,
+          "score": 0.7969
+        },
+        {
+          "seq": 4,
+          "score": 0.7944
+        },
+        {
+          "seq": 3,
+          "score": 0.7819
+        }
+      ],
+      "rag_answer": "Скалярное произведение двух векторов равно произведению их модулей на косинус угла между ними.",
+      "rag_grounded_flag": true,
+      "rag_sources": [
+        {
+          "seq": 2,
+          "chunkId": 8,
+          "start": 31200,
+          "end": 52480,
+          "score": 0.8586179793709376
+        },
+        {
+          "seq": 1,
+          "chunkId": 7,
+          "start": 17120,
+          "end": 36600,
+          "score": 0.8527625559742711
+        },
+        {
+          "seq": 0,
+          "chunkId": 6,
+          "start": 0,
+          "end": 22760,
+          "score": 0.7968991673954494
+        },
+        {
+          "seq": 4,
+          "chunkId": 10,
+          "start": 66280,
+          "end": 81800,
+          "score": 0.7943643326111943
+        },
+        {
+          "seq": 3,
+          "chunkId": 9,
+          "start": 47560,
+          "end": 70480,
+          "score": 0.7818853241838429
+        }
+      ],
+      "baseline_answer": "Скалярное произведение двух векторов равно произведению их модулей на косинус угла между ними: $ \\vec{a} \\cdot \\vec{b} = |\\vec{a}| |\\vec{b}| \\cos \\theta $.",
+      "concept_coverage": 0.8,
+      "rag_pass": true,
+      "source_ok": true,
+      "is_refusal": false,
+      "baseline_refusal": false,
+      "latency": {
+        "embeddingMs": 2090,
+        "ragMs": 523,
+        "baselineMs": 2774,
+        "ragEvalCount": null,
+        "baselineEvalCount": 59,
+        "baselinePromptEvalCount": 66
+      }
+    },
+    {
+      "id": "A4",
+      "type": "direct",
+      "session": "s-direct",
+      "question": "Чему равно смешанное произведение трёх векторов?",
+      "answerable": true,
+      "expected_concept": "объёму параллелепипеда, построенного на этих векторах",
+      "gold_chunks": [
+        2,
+        3
+      ],
+      "gold_rank": 1,
+      "top_chunks": [
+        {
+          "seq": 3,
+          "chunkId": 9,
+          "start": 47560,
+          "end": 70480,
+          "score": 0.8471
+        },
+        {
+          "seq": 2,
+          "chunkId": 8,
+          "start": 31200,
+          "end": 52480,
+          "score": 0.8462
+        },
+        {
+          "seq": 4,
+          "chunkId": 10,
+          "start": 66280,
+          "end": 81800,
+          "score": 0.7975
+        },
+        {
+          "seq": 1,
+          "chunkId": 7,
+          "start": 17120,
+          "end": 36600,
+          "score": 0.7863
+        },
+        {
+          "seq": 0,
+          "chunkId": 6,
+          "start": 0,
+          "end": 22760,
+          "score": 0.7679
+        }
+      ],
+      "all_scores": [
+        {
+          "seq": 3,
+          "score": 0.8471
+        },
+        {
+          "seq": 2,
+          "score": 0.8462
+        },
+        {
+          "seq": 4,
+          "score": 0.7975
+        },
+        {
+          "seq": 1,
+          "score": 0.7863
+        },
+        {
+          "seq": 0,
+          "score": 0.7679
+        }
+      ],
+      "rag_answer": "Смешанное произведение трёх векторов равно объему параллелипипеда, который образован этими векторами.",
+      "rag_grounded_flag": true,
+      "rag_sources": [
+        {
+          "seq": 3,
+          "chunkId": 9,
+          "start": 47560,
+          "end": 70480,
+          "score": 0.8470975917257382
+        },
+        {
+          "seq": 2,
+          "chunkId": 8,
+          "start": 31200,
+          "end": 52480,
+          "score": 0.8461875202874805
+        },
+        {
+          "seq": 4,
+          "chunkId": 10,
+          "start": 66280,
+          "end": 81800,
+          "score": 0.7975385127035775
+        },
+        {
+          "seq": 1,
+          "chunkId": 7,
+          "start": 17120,
+          "end": 36600,
+          "score": 0.786250393618321
+        },
+        {
+          "seq": 0,
+          "chunkId": 6,
+          "start": 0,
+          "end": 22760,
+          "score": 0.7678727739051472
+        }
+      ],
+      "baseline_answer": "Смешанное произведение трёх векторов равно объему параллелепипеда, построенного на этих векторах.",
+      "concept_coverage": 0.6,
+      "rag_pass": true,
+      "source_ok": true,
+      "is_refusal": false,
+      "baseline_refusal": false,
+      "latency": {
+        "embeddingMs": 2071,
+        "ragMs": 566,
+        "baselineMs": 2550,
+        "ragEvalCount": null,
+        "baselineEvalCount": 35,
+        "baselinePromptEvalCount": 69
+      }
+    },
+    {
+      "id": "A5",
+      "type": "direct",
+      "session": "s-direct",
+      "question": "Когда два вектора перпендикулярны?",
+      "answerable": true,
+      "expected_concept": "когда их скалярное произведение равно нулю",
+      "gold_chunks": [
+        1,
+        2
+      ],
+      "gold_rank": 1,
+      "top_chunks": [
+        {
+          "seq": 2,
+          "chunkId": 8,
+          "start": 31200,
+          "end": 52480,
+          "score": 0.8469
+        },
+        {
+          "seq": 0,
+          "chunkId": 6,
+          "start": 0,
+          "end": 22760,
+          "score": 0.8468
+        },
+        {
+          "seq": 1,
+          "chunkId": 7,
+          "start": 17120,
+          "end": 36600,
+          "score": 0.8443
+        },
+        {
+          "seq": 4,
+          "chunkId": 10,
+          "start": 66280,
+          "end": 81800,
+          "score": 0.7853
+        },
+        {
+          "seq": 3,
+          "chunkId": 9,
+          "start": 47560,
+          "end": 70480,
+          "score": 0.7679
+        }
+      ],
+      "all_scores": [
+        {
+          "seq": 2,
+          "score": 0.8469
+        },
+        {
+          "seq": 0,
+          "score": 0.8468
+        },
+        {
+          "seq": 1,
+          "score": 0.8443
+        },
+        {
+          "seq": 4,
+          "score": 0.7853
+        },
+        {
+          "seq": 3,
+          "score": 0.7679
+        }
+      ],
+      "rag_answer": "Два вектора перпендикулярны, когда их скалярное произведение равно нулю.",
+      "rag_grounded_flag": true,
+      "rag_sources": [
+        {
+          "seq": 2,
+          "chunkId": 8,
+          "start": 31200,
+          "end": 52480,
+          "score": 0.8469262142626676
+        },
+        {
+          "seq": 0,
+          "chunkId": 6,
+          "start": 0,
+          "end": 22760,
+          "score": 0.8467740810872145
+        },
+        {
+          "seq": 1,
+          "chunkId": 7,
+          "start": 17120,
+          "end": 36600,
+          "score": 0.8442816099083525
+        },
+        {
+          "seq": 4,
+          "chunkId": 10,
+          "start": 66280,
+          "end": 81800,
+          "score": 0.785273078738994
+        },
+        {
+          "seq": 3,
+          "chunkId": 9,
+          "start": 47560,
+          "end": 70480,
+          "score": 0.767903352772128
+        }
+      ],
+      "baseline_answer": "Два вектора перпендикулярны, если их скалярное произведение равно нулю.",
+      "concept_coverage": 1.0,
+      "rag_pass": true,
+      "source_ok": true,
+      "is_refusal": false,
+      "baseline_refusal": false,
+      "latency": {
+        "embeddingMs": 2075,
+        "ragMs": 492,
+        "baselineMs": 2497,
+        "ragEvalCount": null,
+        "baselineEvalCount": 26,
+        "baselinePromptEvalCount": 66
+      }
+    },
+    {
+      "id": "B1",
+      "type": "multi-chunk",
+      "session": "s-multi",
+      "question": "Где применяются векторы на практике?",
+      "answerable": true,
+      "expected_concept": "в физике, компьютерной графике и машинном обучении",
+      "gold_chunks": [
+        3
+      ],
+      "gold_rank": 4,
+      "top_chunks": [
+        {
+          "seq": 0,
+          "chunkId": 6,
+          "start": 0,
+          "end": 22760,
+          "score": 0.8118
+        },
+        {
+          "seq": 2,
+          "chunkId": 8,
+          "start": 31200,
+          "end": 52480,
+          "score": 0.7869
+        },
+        {
+          "seq": 1,
+          "chunkId": 7,
+          "start": 17120,
+          "end": 36600,
+          "score": 0.7855
+        },
+        {
+          "seq": 3,
+          "chunkId": 9,
+          "start": 47560,
+          "end": 70480,
+          "score": 0.7748
+        },
+        {
+          "seq": 4,
+          "chunkId": 10,
+          "start": 66280,
+          "end": 81800,
+          "score": 0.742
+        }
+      ],
+      "all_scores": [
+        {
+          "seq": 0,
+          "score": 0.8118
+        },
+        {
+          "seq": 2,
+          "score": 0.7869
+        },
+        {
+          "seq": 1,
+          "score": 0.7855
+        },
+        {
+          "seq": 3,
+          "score": 0.7748
+        },
+        {
+          "seq": 4,
+          "score": 0.742
+        }
+      ],
+      "rag_answer": "Векторы применяются на практике в физике, компьютерной графике и машинном обучении. В машинном обучении признаки объекта представляют в виде вектора признаков, а косинусная близость используется для сравнения текстов.",
+      "rag_grounded_flag": true,
+      "rag_sources": [
+        {
+          "seq": 0,
+          "chunkId": 6,
+          "start": 0,
+          "end": 22760,
+          "score": 0.8117657293406327
+        },
+        {
+          "seq": 2,
+          "chunkId": 8,
+          "start": 31200,
+          "end": 52480,
+          "score": 0.7868813944520497
+        },
+        {
+          "seq": 1,
+          "chunkId": 7,
+          "start": 17120,
+          "end": 36600,
+          "score": 0.7855386822037552
+        },
+        {
+          "seq": 3,
+          "chunkId": 9,
+          "start": 47560,
+          "end": 70480,
+          "score": 0.7748095278628263
+        },
+        {
+          "seq": 4,
+          "chunkId": 10,
+          "start": 66280,
+          "end": 81800,
+          "score": 0.741969378977814
+        }
+      ],
+      "baseline_answer": "Векторы применяются в различных областях, таких как физика (для описания движения и сил), инженерия (в электромагнитном анализе, механике), компьютерная графика (для представления объектов и движений), астрономия (в расчетах орбит планет), и других сферах.",
+      "concept_coverage": 1.0,
+      "rag_pass": true,
+      "source_ok": true,
+      "is_refusal": false,
+      "baseline_refusal": false,
+      "latency": {
+        "embeddingMs": 2041,
+        "ragMs": 883,
+        "baselineMs": 2965,
+        "ragEvalCount": null,
+        "baselineEvalCount": 82,
+        "baselinePromptEvalCount": 63
+      }
+    },
+    {
+      "id": "B2",
+      "type": "multi-chunk",
+      "session": "s-multi",
+      "question": "Как векторы используются в машинном обучении и что такое косинусная близость?",
+      "answerable": true,
+      "expected_concept": "признаки объекта — вектор признаков; косинусная близость сравнивает векторные представления текстов",
+      "gold_chunks": [
+        3,
+        4
+      ],
+      "gold_rank": 1,
+      "top_chunks": [
+        {
+          "seq": 4,
+          "chunkId": 10,
+          "start": 66280,
+          "end": 81800,
+          "score": 0.8197
+        },
+        {
+          "seq": 3,
+          "chunkId": 9,
+          "start": 47560,
+          "end": 70480,
+          "score": 0.7833
+        },
+        {
+          "seq": 0,
+          "chunkId": 6,
+          "start": 0,
+          "end": 22760,
+          "score": 0.7673
+        },
+        {
+          "seq": 1,
+          "chunkId": 7,
+          "start": 17120,
+          "end": 36600,
+          "score": 0.7346
+        },
+        {
+          "seq": 2,
+          "chunkId": 8,
+          "start": 31200,
+          "end": 52480,
+          "score": 0.7111
+        }
+      ],
+      "all_scores": [
+        {
+          "seq": 4,
+          "score": 0.8197
+        },
+        {
+          "seq": 3,
+          "score": 0.7833
+        },
+        {
+          "seq": 0,
+          "score": 0.7673
+        },
+        {
+          "seq": 1,
+          "score": 0.7346
+        },
+        {
+          "seq": 2,
+          "score": 0.7111
+        }
+      ],
+      "rag_answer": "Векторы используются в машинном обучении для представления признаков объектов, например, в текстовом анализе, где каждый документ представляется вектором признаков. Косинусная близость — это метод сравнения векторов, основанный на косинусе угла между ними. Она позволяет определять степень сходства между двумя векторами, независимо от их длины.",
+      "rag_grounded_flag": true,
+      "rag_sources": [
+        {
+          "seq": 4,
+          "chunkId": 10,
+          "start": 66280,
+          "end": 81800,
+          "score": 0.8197050868298478
+        },
+        {
+          "seq": 3,
+          "chunkId": 9,
+          "start": 47560,
+          "end": 70480,
+          "score": 0.7833082869035125
+        },
+        {
+          "seq": 0,
+          "chunkId": 6,
+          "start": 0,
+          "end": 22760,
+          "score": 0.767307038243016
+        },
+        {
+          "seq": 1,
+          "chunkId": 7,
+          "start": 17120,
+          "end": 36600,
+          "score": 0.7346132562589922
+        },
+        {
+          "seq": 2,
+          "chunkId": 8,
+          "start": 31200,
+          "end": 52480,
+          "score": 0.7110644941097933
+        }
+      ],
+      "baseline_answer": "Векторы в машинном обучении используются для представления данных, например, векторы признаков или весов в моделях. Косинусная близость — это метрика, которая оценивает угол между векторами, и чем меньше угол, тем ближе векторы. Она используется для сравнения векторов, например, в рекомендательных системах или в подобных задачах.",
+      "concept_coverage": 1.0,
+      "rag_pass": true,
+      "source_ok": true,
+      "is_refusal": false,
+      "baseline_refusal": false,
+      "latency": {
+        "embeddingMs": 2054,
+        "ragMs": 1224,
+        "baselineMs": 3117,
+        "ragEvalCount": null,
+        "baselineEvalCount": 102,
+        "baselinePromptEvalCount": 75
+      }
+    },
+    {
+      "id": "C1",
+      "type": "terminology",
+      "session": "s-term",
+      "question": "Какие векторы называются коллинеарными?",
+      "answerable": true,
+      "expected_concept": "лежащие на параллельных прямых",
+      "gold_chunks": [
+        0,
+        1
+      ],
+      "gold_rank": 1,
+      "top_chunks": [
+        {
+          "seq": 1,
+          "chunkId": 7,
+          "start": 17120,
+          "end": 36600,
+          "score": 0.8642
+        },
+        {
+          "seq": 0,
+          "chunkId": 6,
+          "start": 0,
+          "end": 22760,
+          "score": 0.8385
+        },
+        {
+          "seq": 2,
+          "chunkId": 8,
+          "start": 31200,
+          "end": 52480,
+          "score": 0.7737
+        },
+        {
+          "seq": 4,
+          "chunkId": 10,
+          "start": 66280,
+          "end": 81800,
+          "score": 0.7704
+        },
+        {
+          "seq": 3,
+          "chunkId": 9,
+          "start": 47560,
+          "end": 70480,
+          "score": 0.6904
+        }
+      ],
+      "all_scores": [
+        {
+          "seq": 1,
+          "score": 0.8642
+        },
+        {
+          "seq": 0,
+          "score": 0.8385
+        },
+        {
+          "seq": 2,
+          "score": 0.7737
+        },
+        {
+          "seq": 4,
+          "score": 0.7704
+        },
+        {
+          "seq": 3,
+          "score": 0.6904
+        }
+      ],
+      "rag_answer": "Векторы, лежащие на параллельных прямых, называются коллинеарными.",
+      "rag_grounded_flag": true,
+      "rag_sources": [
+        {
+          "seq": 1,
+          "chunkId": 7,
+          "start": 17120,
+          "end": 36600,
+          "score": 0.8642072037307292
+        },
+        {
+          "seq": 0,
+          "chunkId": 6,
+          "start": 0,
+          "end": 22760,
+          "score": 0.8384843437417274
+        },
+        {
+          "seq": 2,
+          "chunkId": 8,
+          "start": 31200,
+          "end": 52480,
+          "score": 0.7737462005987149
+        },
+        {
+          "seq": 4,
+          "chunkId": 10,
+          "start": 66280,
+          "end": 81800,
+          "score": 0.7703900926604881
+        },
+        {
+          "seq": 3,
+          "chunkId": 9,
+          "start": 47560,
+          "end": 70480,
+          "score": 0.6904479196648889
+        }
+      ],
+      "baseline_answer": "Коллинеарные векторы — это векторы, которые лежат на одной прямой или на параллельных прямых.",
+      "concept_coverage": 1.0,
+      "rag_pass": true,
+      "source_ok": true,
+      "is_refusal": false,
+      "baseline_refusal": false,
+      "latency": {
+        "embeddingMs": 2048,
+        "ragMs": 591,
+        "baselineMs": 2614,
+        "ragEvalCount": null,
+        "baselineEvalCount": 36,
+        "baselinePromptEvalCount": 66
+      }
+    },
+    {
+      "id": "C2",
+      "type": "terminology",
+      "session": "s-term",
+      "question": "Что такое векторное произведение?",
+      "answerable": true,
+      "expected_concept": "вектор, перпендикулярный обоим исходным; его длина равна площади параллелограмма",
+      "gold_chunks": [
+        2
+      ],
+      "gold_rank": 1,
+      "top_chunks": [
+        {
+          "seq": 2,
+          "chunkId": 8,
+          "start": 31200,
+          "end": 52480,
+          "score": 0.8374
+        },
+        {
+          "seq": 0,
+          "chunkId": 6,
+          "start": 0,
+          "end": 22760,
+          "score": 0.8074
+        },
+        {
+          "seq": 4,
+          "chunkId": 10,
+          "start": 66280,
+          "end": 81800,
+          "score": 0.8049
+        },
+        {
+          "seq": 1,
+          "chunkId": 7,
+          "start": 17120,
+          "end": 36600,
+          "score": 0.7984
+        },
+        {
+          "seq": 3,
+          "chunkId": 9,
+          "start": 47560,
+          "end": 70480,
+          "score": 0.7896
+        }
+      ],
+      "all_scores": [
+        {
+          "seq": 2,
+          "score": 0.8374
+        },
+        {
+          "seq": 0,
+          "score": 0.8074
+        },
+        {
+          "seq": 4,
+          "score": 0.8049
+        },
+        {
+          "seq": 1,
+          "score": 0.7984
+        },
+        {
+          "seq": 3,
+          "score": 0.7896
+        }
+      ],
+      "rag_answer": "Векторное произведение — это вектор, который получается при умножении двух векторов. Его длина равна площади параллелограмма, построенного на исходных векторах, а направление перпендикулярно плоскости этих векторов.",
+      "rag_grounded_flag": true,
+      "rag_sources": [
+        {
+          "seq": 2,
+          "chunkId": 8,
+          "start": 31200,
+          "end": 52480,
+          "score": 0.8374028163725636
+        },
+        {
+          "seq": 0,
+          "chunkId": 6,
+          "start": 0,
+          "end": 22760,
+          "score": 0.8074431536061247
+        },
+        {
+          "seq": 4,
+          "chunkId": 10,
+          "start": 66280,
+          "end": 81800,
+          "score": 0.804927913384216
+        },
+        {
+          "seq": 1,
+          "chunkId": 7,
+          "start": 17120,
+          "end": 36600,
+          "score": 0.7984480743325425
+        },
+        {
+          "seq": 3,
+          "chunkId": 9,
+          "start": 47560,
+          "end": 70480,
+          "score": 0.7895944953565117
+        }
+      ],
+      "baseline_answer": "Векторное произведение (векторное умножение) — это операция с двумя векторами, результатом которой является вектор, перпендикулярный обоим исходным векторам. Его модуль равен площади параллелограмма, построенного на этих векторах, а направление определяется правилом правой рукой.",
+      "concept_coverage": 0.857,
+      "rag_pass": true,
+      "source_ok": true,
+      "is_refusal": false,
+      "baseline_refusal": false,
+      "latency": {
+        "embeddingMs": 2039,
+        "ragMs": 940,
+        "baselineMs": 3025,
+        "ragEvalCount": null,
+        "baselineEvalCount": 89,
+        "baselinePromptEvalCount": 61
+      }
+    },
+    {
+      "id": "C3",
+      "type": "terminology",
+      "session": "s-term",
+      "question": "Что такое косинусная близость?",
+      "answerable": true,
+      "expected_concept": "мера сравнения векторных представлений (текстов) через косинус",
+      "gold_chunks": [
+        3,
+        4
+      ],
+      "gold_rank": 1,
+      "top_chunks": [
+        {
+          "seq": 4,
+          "chunkId": 10,
+          "start": 66280,
+          "end": 81800,
+          "score": 0.8092
+        },
+        {
+          "seq": 1,
+          "chunkId": 7,
+          "start": 17120,
+          "end": 36600,
+          "score": 0.7194
+        },
+        {
+          "seq": 3,
+          "chunkId": 9,
+          "start": 47560,
+          "end": 70480,
+          "score": 0.7055
+        },
+        {
+          "seq": 0,
+          "chunkId": 6,
+          "start": 0,
+          "end": 22760,
+          "score": 0.7009
+        },
+        {
+          "seq": 2,
+          "chunkId": 8,
+          "start": 31200,
+          "end": 52480,
+          "score": 0.6996
+        }
+      ],
+      "all_scores": [
+        {
+          "seq": 4,
+          "score": 0.8092
+        },
+        {
+          "seq": 1,
+          "score": 0.7194
+        },
+        {
+          "seq": 3,
+          "score": 0.7055
+        },
+        {
+          "seq": 0,
+          "score": 0.7009
+        },
+        {
+          "seq": 2,
+          "score": 0.6996
+        }
+      ],
+      "rag_answer": "Информация о косинусной близости приведена в источнике [1]. Косинусная близость используется для сравнения текстов, нормализуя длину вектора до единицы.",
+      "rag_grounded_flag": true,
+      "rag_sources": [
+        {
+          "seq": 4,
+          "chunkId": 10,
+          "start": 66280,
+          "end": 81800,
+          "score": 0.8091578288518475
+        },
+        {
+          "seq": 1,
+          "chunkId": 7,
+          "start": 17120,
+          "end": 36600,
+          "score": 0.7193913170685198
+        },
+        {
+          "seq": 3,
+          "chunkId": 9,
+          "start": 47560,
+          "end": 70480,
+          "score": 0.705529776831398
+        },
+        {
+          "seq": 0,
+          "chunkId": 6,
+          "start": 0,
+          "end": 22760,
+          "score": 0.7009222544819148
+        },
+        {
+          "seq": 2,
+          "chunkId": 8,
+          "start": 31200,
+          "end": 52480,
+          "score": 0.6996203045757321
+        }
+      ],
+      "baseline_answer": "Косинусная близость — это мера близости между двумя векторами в пространстве, которая равна косинусу угла между ними. Чем больше косинус угла, тем ближе векторы.",
+      "concept_coverage": 0.667,
+      "rag_pass": true,
+      "source_ok": true,
+      "is_refusal": false,
+      "baseline_refusal": false,
+      "latency": {
+        "embeddingMs": 2054,
+        "ragMs": 880,
+        "baselineMs": 2791,
+        "ragEvalCount": null,
+        "baselineEvalCount": 60,
+        "baselinePromptEvalCount": 64
+      }
+    },
+    {
+      "id": "D1",
+      "type": "follow-up",
+      "session": "s-multi",
+      "question": "А зачем при этом нужна нормализация?",
+      "answerable": true,
+      "expected_concept": "нормализация приводит длину вектора к единице",
+      "gold_chunks": [
+        4
+      ],
+      "gold_rank": 1,
+      "top_chunks": [
+        {
+          "seq": 4,
+          "chunkId": 10,
+          "start": 66280,
+          "end": 81800,
+          "score": 0.7765
+        },
+        {
+          "seq": 2,
+          "chunkId": 8,
+          "start": 31200,
+          "end": 52480,
+          "score": 0.7751
+        },
+        {
+          "seq": 1,
+          "chunkId": 7,
+          "start": 17120,
+          "end": 36600,
+          "score": 0.7735
+        },
+        {
+          "seq": 0,
+          "chunkId": 6,
+          "start": 0,
+          "end": 22760,
+          "score": 0.7504
+        },
+        {
+          "seq": 3,
+          "chunkId": 9,
+          "start": 47560,
+          "end": 70480,
+          "score": 0.7065
+        }
+      ],
+      "all_scores": [
+        {
+          "seq": 4,
+          "score": 0.7765
+        },
+        {
+          "seq": 2,
+          "score": 0.7751
+        },
+        {
+          "seq": 1,
+          "score": 0.7735
+        },
+        {
+          "seq": 0,
+          "score": 0.7504
+        },
+        {
+          "seq": 3,
+          "score": 0.7065
+        }
+      ],
+      "rag_answer": "Нормализация необходима, чтобы устранить влияние длины вектора на результат косинусной близости. Без нормализации векторы могут иметь разные длинны, что приводит к несравнимому результату. Нормализация (например, деление на модуль) позволяет сравнивать векторы независимо от их длины, обеспечивая объективность и точность сравнения.",
+      "rag_grounded_flag": true,
+      "rag_sources": [
+        {
+          "seq": 4,
+          "chunkId": 10,
+          "start": 66280,
+          "end": 81800,
+          "score": 0.7764963340408026
+        },
+        {
+          "seq": 2,
+          "chunkId": 8,
+          "start": 31200,
+          "end": 52480,
+          "score": 0.7751367488358664
+        },
+        {
+          "seq": 1,
+          "chunkId": 7,
+          "start": 17120,
+          "end": 36600,
+          "score": 0.7735444088378866
+        },
+        {
+          "seq": 0,
+          "chunkId": 6,
+          "start": 0,
+          "end": 22760,
+          "score": 0.7504139517655869
+        },
+        {
+          "seq": 3,
+          "chunkId": 9,
+          "start": 47560,
+          "end": 70480,
+          "score": 0.7064952119436748
+        }
+      ],
+      "baseline_answer": "Нормализация позволяет стандартизировать данные, упрощать обработку и повышать точность результатов.",
+      "concept_coverage": 0.6,
+      "rag_pass": true,
+      "source_ok": true,
+      "is_refusal": false,
+      "baseline_refusal": false,
+      "latency": {
+        "embeddingMs": 2050,
+        "ragMs": 1231,
+        "baselineMs": 2512,
+        "ragEvalCount": null,
+        "baselineEvalCount": 29,
+        "baselinePromptEvalCount": 63
+      }
+    },
+    {
+      "id": "D2",
+      "type": "follow-up",
+      "session": "s-direct",
+      "question": "А как называется его длина?",
+      "answerable": true,
+      "expected_concept": "модуль вектора",
+      "gold_chunks": [
+        0
+      ],
+      "gold_rank": 3,
+      "top_chunks": [
+        {
+          "seq": 1,
+          "chunkId": 7,
+          "start": 17120,
+          "end": 36600,
+          "score": 0.7616
+        },
+        {
+          "seq": 4,
+          "chunkId": 10,
+          "start": 66280,
+          "end": 81800,
+          "score": 0.745
+        },
+        {
+          "seq": 0,
+          "chunkId": 6,
+          "start": 0,
+          "end": 22760,
+          "score": 0.7392
+        },
+        {
+          "seq": 2,
+          "chunkId": 8,
+          "start": 31200,
+          "end": 52480,
+          "score": 0.6719
+        },
+        {
+          "seq": 3,
+          "chunkId": 9,
+          "start": 47560,
+          "end": 70480,
+          "score": 0.6107
+        }
+      ],
+      "all_scores": [
+        {
+          "seq": 1,
+          "score": 0.7616
+        },
+        {
+          "seq": 4,
+          "score": 0.745
+        },
+        {
+          "seq": 0,
+          "score": 0.7392
+        },
+        {
+          "seq": 2,
+          "score": 0.6719
+        },
+        {
+          "seq": 3,
+          "score": 0.6107
+        }
+      ],
+      "rag_answer": "Длина вектора называется его модулем.",
+      "rag_grounded_flag": true,
+      "rag_sources": [
+        {
+          "seq": 1,
+          "chunkId": 7,
+          "start": 17120,
+          "end": 36600,
+          "score": 0.7616302666927375
+        },
+        {
+          "seq": 4,
+          "chunkId": 10,
+          "start": 66280,
+          "end": 81800,
+          "score": 0.7449885122222409
+        },
+        {
+          "seq": 0,
+          "chunkId": 6,
+          "start": 0,
+          "end": 22760,
+          "score": 0.7392451270645307
+        },
+        {
+          "seq": 2,
+          "chunkId": 8,
+          "start": 31200,
+          "end": 52480,
+          "score": 0.671946803977989
+        },
+        {
+          "seq": 3,
+          "chunkId": 9,
+          "start": 47560,
+          "end": 70480,
+          "score": 0.6107404569281852
+        }
+      ],
+      "baseline_answer": "Длина — это свойство отрезка, и её называют **длиной отрезка**.",
+      "concept_coverage": 1.0,
+      "rag_pass": true,
+      "source_ok": true,
+      "is_refusal": false,
+      "baseline_refusal": false,
+      "latency": {
+        "embeddingMs": 2074,
+        "ragMs": 412,
+        "baselineMs": 2485,
+        "ragEvalCount": null,
+        "baselineEvalCount": 24,
+        "baselinePromptEvalCount": 60
+      }
+    },
+    {
+      "id": "E1",
+      "type": "unanswerable",
+      "session": "s-noans",
+      "question": "Какая сегодня погода в Москве?",
+      "answerable": false,
+      "expected_concept": "в лекции нет информации — корректный отказ",
+      "gold_chunks": [],
+      "gold_rank": null,
+      "top_chunks": [
+        {
+          "seq": 0,
+          "chunkId": 6,
+          "start": 0,
+          "end": 22760,
+          "score": 0.7342
+        },
+        {
+          "seq": 4,
+          "chunkId": 10,
+          "start": 66280,
+          "end": 81800,
+          "score": 0.7245
+        },
+        {
+          "seq": 1,
+          "chunkId": 7,
+          "start": 17120,
+          "end": 36600,
+          "score": 0.7143
+        },
+        {
+          "seq": 3,
+          "chunkId": 9,
+          "start": 47560,
+          "end": 70480,
+          "score": 0.7046
+        },
+        {
+          "seq": 2,
+          "chunkId": 8,
+          "start": 31200,
+          "end": 52480,
+          "score": 0.701
+        }
+      ],
+      "all_scores": [
+        {
+          "seq": 0,
+          "score": 0.7342
+        },
+        {
+          "seq": 4,
+          "score": 0.7245
+        },
+        {
+          "seq": 1,
+          "score": 0.7143
+        },
+        {
+          "seq": 3,
+          "score": 0.7046
+        },
+        {
+          "seq": 2,
+          "score": 0.701
+        }
+      ],
+      "rag_answer": "Информации о погоде в Москве в предоставленных источниках нет.",
+      "rag_grounded_flag": false,
+      "rag_sources": [],
+      "baseline_answer": "Сегодня в Москве дождь, температура 12°C, ветер северный, 10 км/ч.",
+      "concept_coverage": null,
+      "rag_pass": true,
+      "source_ok": true,
+      "is_refusal": true,
+      "baseline_refusal": false,
+      "latency": {
+        "embeddingMs": 2041,
+        "ragMs": 571,
+        "baselineMs": 2520,
+        "ragEvalCount": null,
+        "baselineEvalCount": 36,
+        "baselinePromptEvalCount": 61
+      }
+    },
+    {
+      "id": "E2",
+      "type": "unanswerable",
+      "session": "s-noans",
+      "question": "Кто автор этой лекции и в каком году она была прочитана?",
+      "answerable": false,
+      "expected_concept": "в лекции нет информации — корректный отказ",
+      "gold_chunks": [],
+      "gold_rank": null,
+      "top_chunks": [
+        {
+          "seq": 4,
+          "chunkId": 10,
+          "start": 66280,
+          "end": 81800,
+          "score": 0.7878
+        },
+        {
+          "seq": 0,
+          "chunkId": 6,
+          "start": 0,
+          "end": 22760,
+          "score": 0.7697
+        },
+        {
+          "seq": 1,
+          "chunkId": 7,
+          "start": 17120,
+          "end": 36600,
+          "score": 0.756
+        },
+        {
+          "seq": 2,
+          "chunkId": 8,
+          "start": 31200,
+          "end": 52480,
+          "score": 0.7523
+        },
+        {
+          "seq": 3,
+          "chunkId": 9,
+          "start": 47560,
+          "end": 70480,
+          "score": 0.7298
+        }
+      ],
+      "all_scores": [
+        {
+          "seq": 4,
+          "score": 0.7878
+        },
+        {
+          "seq": 0,
+          "score": 0.7697
+        },
+        {
+          "seq": 1,
+          "score": 0.756
+        },
+        {
+          "seq": 2,
+          "score": 0.7523
+        },
+        {
+          "seq": 3,
+          "score": 0.7298
+        }
+      ],
+      "rag_answer": "Информации о авторе и году проведения лекции в предоставленных источниках нет.",
+      "rag_grounded_flag": false,
+      "rag_sources": [],
+      "baseline_answer": "Автор лекции — Аристотель, она была прочитана в 335 году до н. э.",
+      "concept_coverage": null,
+      "rag_pass": true,
+      "source_ok": true,
+      "is_refusal": true,
+      "baseline_refusal": false,
+      "latency": {
+        "embeddingMs": 2053,
+        "ragMs": 542,
+        "baselineMs": 2482,
+        "ragEvalCount": null,
+        "baselineEvalCount": 28,
+        "baselinePromptEvalCount": 70
+      }
+    },
+    {
+      "id": "E3",
+      "type": "unanswerable",
+      "session": "s-noans",
+      "question": "Сколько стоит видеокарта RTX 3050?",
+      "answerable": false,
+      "expected_concept": "в лекции нет информации — корректный отказ",
+      "gold_chunks": [],
+      "gold_rank": null,
+      "top_chunks": [
+        {
+          "seq": 1,
+          "chunkId": 7,
+          "start": 17120,
+          "end": 36600,
+          "score": 0.6616
+        },
+        {
+          "seq": 2,
+          "chunkId": 8,
+          "start": 31200,
+          "end": 52480,
+          "score": 0.66
+        },
+        {
+          "seq": 4,
+          "chunkId": 10,
+          "start": 66280,
+          "end": 81800,
+          "score": 0.6583
+        },
+        {
+          "seq": 0,
+          "chunkId": 6,
+          "start": 0,
+          "end": 22760,
+          "score": 0.6521
+        },
+        {
+          "seq": 3,
+          "chunkId": 9,
+          "start": 47560,
+          "end": 70480,
+          "score": 0.6298
+        }
+      ],
+      "all_scores": [
+        {
+          "seq": 1,
+          "score": 0.6616
+        },
+        {
+          "seq": 2,
+          "score": 0.66
+        },
+        {
+          "seq": 4,
+          "score": 0.6583
+        },
+        {
+          "seq": 0,
+          "score": 0.6521
+        },
+        {
+          "seq": 3,
+          "score": 0.6298
+        }
+      ],
+      "rag_answer": "Информации о стоимости видеокарты RTX 3050 в предоставленных источниках нет.",
+      "rag_grounded_flag": false,
+      "rag_sources": [],
+      "baseline_answer": "Стоимость видеокарты RTX 3050 варьируется, но обычно она лежит в пределах от 3000 до 4000 рублей в зависимости от модели и варианта.",
+      "concept_coverage": null,
+      "rag_pass": true,
+      "source_ok": true,
+      "is_refusal": true,
+      "baseline_refusal": false,
+      "latency": {
+        "embeddingMs": 2079,
+        "ragMs": 691,
+        "baselineMs": 2670,
+        "ragEvalCount": null,
+        "baselineEvalCount": 52,
+        "baselinePromptEvalCount": 68
+      }
+    }
+  ]
+}

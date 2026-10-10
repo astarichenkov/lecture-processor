@@ -11,5 +11,6 @@ public record SourceRef(
         int chunkSequence,
         long startMs,
         long endMs,
+        double score,
         String excerpt) {
 }
