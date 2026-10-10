@@ -37,6 +37,10 @@ app:
     queue-capacity: 20
     llm-chunk-chars: 6000
     llm-chunk-overlap-chars: 400
+    # RAG retrieval chunks are intentionally smaller than generation chunks:
+    # small sub-topic chunks improve recall, large chunks cut LLM call count.
+    rag-chunk-chars: 400
+    rag-chunk-overlap-chars: 60
     max-chunks-per-lecture: 200
   ollama:
     base-url: ${OLLAMA_BASE_URL:http://localhost:11434}

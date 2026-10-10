@@ -1,0 +1,13 @@
+configuration,task,model,think,promptVersion,numCtx,numPredict,temperature,status,wallMs,inputTokens,outputTokens,thinkingTokensEst,evalTokensPerSec,totalOllamaMs,loadMs,gpuUsedMiB,doneReason,truncated,keyFactHits,keyFactTotal,contentChars,cyrillicRatio,headings
+A-qwen3-1.7b-baseline,clean,qwen3:1.7b,False,clean-transcript-v1,4096,1536,0.1,PASS,6812,494,303,0,112.09,4729,1824,2200,stop,False,7,7,967,1.0,0
+A-qwen3-1.7b-baseline,notes,qwen3:1.7b,False,structured-notes-v1,4096,1536,0.1,PASS,5819,503,387,0,113.15,3776,15,2200,stop,False,7,7,1170,1.0,6
+A-qwen3-1.7b-baseline,rag,qwen3:1.7b,False,rag-answer-v1,4096,1536,0.1,PASS,3450,638,120,0,114.03,1424,14,2200,stop,False,2,7,354,1.0,0
+B-qwen3-1.7b-optimized,clean,qwen3:1.7b,False,clean-transcript-v2,4096,512,0.1,PASS,5070,472,304,0,112.1,3042,15,2200,stop,False,7,7,968,1.0,0
+B-qwen3-1.7b-optimized,notes,qwen3:1.7b,False,structured-notes-v2,4096,512,0.1,PASS,5838,500,391,0,113.17,3796,16,2200,stop,False,7,7,1187,1.0,6
+B-qwen3-1.7b-optimized,rag,qwen3:1.7b,False,rag-answer-v1,4096,512,0.1,PASS,3323,638,120,0,106.28,1292,15,2200,stop,False,2,7,354,1.0,0
+C-qwen3-1.7b-thinking,clean,qwen3:1.7b,True,clean-transcript-v1,4096,2048,0.1,PASS,9906,488,840,515,108.77,7874,14,2200,stop,False,7,7,971,1.0,0
+C-qwen3-1.7b-thinking,notes,qwen3:1.7b,True,structured-notes-v1,4096,2048,0.1,PASS,9407,497,784,410,109.0,7344,15,2200,stop,False,7,7,1332,0.9,6
+C-qwen3-1.7b-thinking,rag,qwen3:1.7b,True,rag-answer-v1,4096,2048,0.1,PASS,5514,632,350,272,105.54,3471,15,2200,stop,False,2,7,441,1.0,0
+D-qwen3-4b-verified,clean,qwen3:4b,True,clean-transcript-v1,4096,4096,0.2,PASS,224608,488,4096,2983,18.91,222567,5468,2378,length,True,0,7,0,0.0,0
+D-qwen3-4b-verified,notes,qwen3:4b,True,structured-notes-v1,4096,4096,0.2,PASS,187460,497,3556,2402,19.24,185439,16,2380,stop,False,7,7,963,1.0,5
+D-qwen3-4b-verified,rag,qwen3:4b,True,rag-answer-v1,4096,4096,0.2,PASS,47885,632,1141,878,25.34,45859,15,2380,stop,False,1,7,133,1.0,0

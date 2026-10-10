@@ -43,8 +43,11 @@ public class EmbeddingIndexService {
             chunkRepository.replaceAll(lectureId, List.of());
             return 0;
         }
-        int maxChars = properties.processing().llmChunkChars();
-        int overlap = properties.processing().llmChunkOverlapChars();
+        // RAG uses smaller chunks than text generation on purpose: retrieval
+        // granularity benefits from sub-topic chunks, while generation is much
+        // faster with fewer, larger chunks (see Day 29 report).
+        int maxChars = properties.processing().ragChunkChars();
+        int overlap = properties.processing().ragChunkOverlapChars();
         List<SegmentChunk> parts = chunker.chunkSegments(segments, maxChars, overlap);
 
         List<LectureChunk> chunks = new ArrayList<>();

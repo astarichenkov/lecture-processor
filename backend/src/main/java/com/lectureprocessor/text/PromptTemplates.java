@@ -37,4 +37,8 @@ public class PromptTemplates {
     public static final String STRUCTURED_NOTES = "structured-notes-v1";
     public static final String SUMMARY = "summary-v1";
     public static final String RAG_ANSWER = "rag-answer-v1";
+
+    /** Day 29 optimized prompt versions (more constrained, lower verbosity). */
+    public static final String CLEAN_TRANSCRIPT_V2 = "clean-transcript-v2";
+    public static final String STRUCTURED_NOTES_V2 = "structured-notes-v2";
 }

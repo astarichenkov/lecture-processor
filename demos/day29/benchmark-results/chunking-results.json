@@ -1,0 +1,51 @@
+{
+  "lectureId": "e176a109-b7fe-4f9b-a5e7-9604231f7d34",
+  "model": "qwen3:1.7b",
+  "overlapChars": 60,
+  "results": [
+    {
+      "maxChars": 300,
+      "calls": 5,
+      "outputTokens": 841,
+      "sequentialMs": 19958,
+      "concurrency2Ms": 9187,
+      "chunkChars": [
+        270,
+        238,
+        258,
+        284,
+        183
+      ]
+    },
+    {
+      "maxChars": 1000,
+      "calls": 1,
+      "outputTokens": 313,
+      "sequentialMs": 5038,
+      "concurrency2Ms": 5078,
+      "chunkChars": [
+        967
+      ]
+    },
+    {
+      "maxChars": 3000,
+      "calls": 1,
+      "outputTokens": 318,
+      "sequentialMs": 5069,
+      "concurrency2Ms": 4972,
+      "chunkChars": [
+        967
+      ]
+    },
+    {
+      "maxChars": 6000,
+      "calls": 1,
+      "outputTokens": 313,
+      "sequentialMs": 4987,
+      "concurrency2Ms": 5044,
+      "chunkChars": [
+        967
+      ]
+    }
+  ]
+}

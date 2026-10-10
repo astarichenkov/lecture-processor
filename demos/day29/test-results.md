@@ -1,28 +1,49 @@
-# Day 29 — test results
+# Day 29 — test results (real)
 
-## Executed automated tests
+Machine: Ryzen 7 5800H / RTX 3050 Laptop 4 GB / 32 GB RAM, Windows, Java 25.
+Ollama 0.40.2: `qwen3:1.7b`, `qwen3:4b`, `nomic-embed-text`.
+
+## Automated tests
+
+```
+./mvnw verify    # → 88 tests PASS (68 backend + 20 private-ai-chat)
+```
+
+Day 29 relevant classes:
 
 | Test class | Tests | Result |
-|-----------|-------|--------|
+|---|---|---|
 | BenchmarkRunnerTest | 3 | PASS |
 | BenchmarkServiceTest | 2 | PASS |
-| PerceptualHashTest | 3 | PASS |
+| PerceptualHashTest | 4 | PASS (incl. new `realJpegHashIsNotZero`) |
+| SlideExtractionServiceTest | 1 | PASS (non-adjacent dedup) |
 | DocxExporterTest (image insertion) | 2 | PASS |
 
-These verify benchmark metric recording, SKIPPED/FAIL handling, result
-serialization (CSV/Markdown), perceptual-hash dedup logic, and DOCX image
-insertion.
+## Real benchmark runs
 
-## Benchmark runs
+Status: **DONE** — see `benchmark-results/results.json`,
+`benchmark-results/results.csv`, `benchmark-results/report.md`,
+`benchmark-results/chunking-results.json`.
 
-Status: **SKIPPED** — Ollama/Qwen3 models unavailable in this environment.
-`BenchmarkRunner` correctly produces `SKIPPED` entries with the reason
-"Ollama недоступна — замер не выполнялся" (verified by `BenchmarkRunnerTest`).
+- Matrix A (qwen3:1.7b baseline), B (v2 prompts), C (thinking), D (qwen3:4b).
+- E (qwen3:8b): **SKIPPED** — 4 GB VRAM + overnight time budget.
+- Representative tasks: clean transcript, structured notes, RAG answer.
+- Real metrics captured from Ollama (`prompt_eval_count`, `eval_count`,
+  `eval_duration`, `done_reason`), `nvidia-smi` and `ollama ps`.
 
-Real measured results must be saved under `demos/day29/benchmark-results/`
-after running the benchmark with models present. No figures are fabricated here.
+## Real slide extraction
 
-## Slide extraction
+Status: **DONE** on `demos/fixtures/synthetic-slides-with-audio.mp4`
+(5 patterned slides + 2 near-duplicates):
 
-Status: **SKIPPED** for real video (FFmpeg absent). Unit tests verify the
-deduplication and DOCX-insertion logic with synthetic images.
+| Check | Result |
+|---|---|
+| candidates → slides | 14 → 5 |
+| duplicates removed | PASS |
+| timestamps | 0, 4000, 8000, 12000, 16000 ms |
+| chronological | PASS |
+| max-images=3 | PASS (3 slides) |
+| DOCX images | PASS (5 media entries) |
+
+Two real defects were found and fixed: real-JPEG hashing (`PerceptualHash`)
+and non-adjacent duplicate handling (`SlideExtractionService`).

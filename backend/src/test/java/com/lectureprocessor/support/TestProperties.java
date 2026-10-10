@@ -17,7 +17,7 @@ public final class TestProperties {
                 new AppProperties.Tools("ffmpeg", "ffprobe", "whisper-cli", "model.bin", "ru", Duration.ofMinutes(5)),
                 new AppProperties.Storage(storageRoot),
                 new AppProperties.Upload(1024L * 1024L),
-                new AppProperties.Processing(2, 10, 200, 20, 50),
+                new AppProperties.Processing(2, 10, 200, 20, 80, 20, 50),
                 new AppProperties.Ollama("http://localhost:11434", "fake-model", "fake-embed", 32,
                         Duration.ofMinutes(1), true),
                 new AppProperties.Slides(30.0, 10, 6),

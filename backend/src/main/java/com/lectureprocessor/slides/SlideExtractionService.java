@@ -51,18 +51,24 @@ public class SlideExtractionService {
                 config.intervalSeconds(), candidateLimit);
 
         List<Slide> slides = new ArrayList<>();
-        long lastHash = -1;
+        // Compare against ALL kept hashes, not just the previous frame: a slide
+        // can reappear later in the lecture (e.g. a repeated title) and must
+        // still be deduplicated.
+        List<Long> keptHashes = new ArrayList<>();
         for (ExtractedFrame frame : frames) {
             if (slides.size() >= config.maxImages()) {
                 deleteQuietly(frame.path());
                 continue;
             }
             long hash = hashOf(frame.path());
-            if (lastHash >= 0 && PerceptualHash.hammingDistance(lastHash, hash) < config.hashDistanceThreshold()) {
+            boolean duplicate = keptHashes.stream()
+                    .anyMatch(kept -> PerceptualHash.hammingDistance(kept, hash)
+                            < config.hashDistanceThreshold());
+            if (duplicate) {
                 deleteQuietly(frame.path());
                 continue;
             }
-            lastHash = hash;
+            keptHashes.add(hash);
             slides.add(new Slide(0, lectureId, slides.size(), frame.timestampMs(),
                     frame.path().toAbsolutePath().toString(), PerceptualHash.toHex(hash)));
         }

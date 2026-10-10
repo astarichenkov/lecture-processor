@@ -39,6 +39,8 @@ public record AppProperties(
             int queueCapacity,
             int llmChunkChars,
             int llmChunkOverlapChars,
+            int ragChunkChars,
+            int ragChunkOverlapChars,
             int maxChunksPerLecture) {
     }
 

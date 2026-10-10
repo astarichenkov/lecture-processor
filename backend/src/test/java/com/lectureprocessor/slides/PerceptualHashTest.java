@@ -5,6 +5,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+import javax.imageio.ImageIO;
 
 import org.junit.jupiter.api.Test;
 
@@ -33,6 +37,28 @@ class PerceptualHashTest {
             }
         }
         return image;
+    }
+
+    @Test
+    void realJpegHashIsNotZero() throws Exception {
+        // Regression: color-managed JPEG sources (ICC, TYPE_3BYTE_BGR) used to
+        // scale down to a flat background via Graphics2D.drawImage, yielding an
+        // all-zero hash for every real frame.
+        Path file = Path.of("target/test-data/phash-" + System.nanoTime() + ".jpg");
+        Files.createDirectories(file.getParent());
+        BufferedImage source = new BufferedImage(320, 180, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = source.createGraphics();
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, 320, 180);
+        g.setColor(Color.BLACK);
+        g.fillRect(40, 40, 120, 80);
+        g.dispose();
+        ImageIO.write(source, "jpg", file.toFile());
+
+        BufferedImage jpeg = ImageIO.read(file.toFile());
+        long hash = PerceptualHash.of(jpeg);
+
+        assertThat(PerceptualHash.hammingDistance(hash, 0L)).isGreaterThan(0);
     }
 
     @Test
