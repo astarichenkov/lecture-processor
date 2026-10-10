@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.retry.RetryPolicy;
+import org.springframework.core.retry.RetryTemplate;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -40,13 +42,23 @@ public class OllamaLlmProvider implements LlmProvider {
     public OllamaLlmProvider(AppProperties properties) {
         this.properties = properties;
         AppProperties.Ollama ollama = properties.ollama();
-        this.ollamaApi = OllamaApi.builder().baseUrl(ollama.baseUrl()).build();
+        // Connect quickly, allow long generation, and never retry on connection
+        // failure: an unreachable Ollama must fail fast, not hang for minutes.
+        SimpleClientHttpRequestFactory ollamaHttp = new SimpleClientHttpRequestFactory();
+        ollamaHttp.setConnectTimeout(Duration.ofSeconds(5));
+        ollamaHttp.setReadTimeout(toMillis(ollama.timeout()));
+        RetryTemplate noRetry = new RetryTemplate(RetryPolicy.withMaxRetries(0));
+        this.ollamaApi = OllamaApi.builder()
+                .baseUrl(ollama.baseUrl())
+                .restClientBuilder(RestClient.builder().requestFactory(ollamaHttp))
+                .build();
         this.chatModel = OllamaChatModel.builder()
                 .ollamaApi(ollamaApi)
                 .options(OllamaChatOptions.builder()
                         .model(ollama.chatModel())
                         .numCtx(4096)
                         .build())
+                .retryTemplate(noRetry)
                 .build();
         this.embeddingModel = OllamaEmbeddingModel.builder()
                 .ollamaApi(ollamaApi)
@@ -61,6 +73,11 @@ public class OllamaLlmProvider implements LlmProvider {
                 .baseUrl(ollama.baseUrl())
                 .requestFactory(factory)
                 .build();
+    }
+
+    private static int toMillis(Duration duration) {
+        long millis = duration == null ? Duration.ofMinutes(10).toMillis() : duration.toMillis();
+        return (int) Math.min(Integer.MAX_VALUE, Math.max(1, millis));
     }
 
     @Override

@@ -9,6 +9,19 @@
 | whisper.cpp | `WHISPER_PATH` (`whisper-cli.exe`) + `WHISPER_MODEL_PATH` |
 | Ollama | `qwen3:4b`, embedding model (e.g. `nomic-embed-text`) |
 
+## Reproducible tool install
+
+```powershell
+./scripts/install-day27-tools.ps1          # FFmpeg + whisper.cpp + model
+winget install Ollama.Ollama               # Ollama separately
+ollama pull qwen3:4b
+```
+
+Verified on this machine: FFmpeg 9.0.2 at
+`C:\tools\ffmpeg\ffmpeg-9.0.2-essentials_build\bin`, whisper.cpp b5454 at
+`C:\tools\whisper\bin\Release\whisper-cli.exe`, model
+`C:\tools\whisper\models\ggml-small.bin`.
+
 ## Environment variables
 
 ```
@@ -21,6 +34,9 @@ OLLAMA_CHAT_MODEL=qwen3:4b
 OLLAMA_EMBEDDING_MODEL=nomic-embed-text
 LECTURE_STORAGE_ROOT=C:\lecture-processor\data
 ```
+
+> Disk note: Ollama + `qwen3:4b` need ≈4 GB free. Check with
+> `[math]::Round((Get-PSDrive C).Free/1GB,2)` before installing.
 
 ## Run
 

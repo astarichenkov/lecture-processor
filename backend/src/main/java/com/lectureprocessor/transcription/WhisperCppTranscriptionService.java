@@ -29,12 +29,14 @@ public class WhisperCppTranscriptionService implements TranscriptionService {
     private final ProcessExecutor executor;
     private final AppProperties properties;
     private final WhisperTranscriptParser parser;
+    private final TranscriptSanitizer sanitizer;
 
     public WhisperCppTranscriptionService(ProcessExecutor executor, AppProperties properties,
-            WhisperTranscriptParser parser) {
+            WhisperTranscriptParser parser, TranscriptSanitizer sanitizer) {
         this.executor = executor;
         this.properties = properties;
         this.parser = parser;
+        this.sanitizer = sanitizer;
     }
 
     @Override
@@ -68,8 +70,9 @@ public class WhisperCppTranscriptionService implements TranscriptionService {
         }
         try {
             String json = Files.readString(jsonPath, StandardCharsets.UTF_8);
-            Transcript transcript = parser.parse(json);
-            log.info("Transcription parsed: {} segments", transcript.segments().size());
+            Transcript transcript = sanitizer.sanitize(parser.parse(json));
+            log.info("Transcription parsed: {} speech segments (after sanitizing)",
+                    transcript.segments().size());
             return transcript;
         } catch (IOException e) {
             throw new TranscriptionException("Не удалось прочитать JSON транскрипции", e);

@@ -17,6 +17,7 @@ import com.lectureprocessor.domain.Transcript;
 import com.lectureprocessor.document.DocxExporter;
 import com.lectureprocessor.document.MarkdownBuilder;
 import com.lectureprocessor.document.SlideImage;
+import com.lectureprocessor.llm.LlmException;
 import com.lectureprocessor.llm.LlmOptions;
 import com.lectureprocessor.llm.LlmProvider;
 import com.lectureprocessor.rag.EmbeddingIndexService;
@@ -95,6 +96,10 @@ public class LectureProcessingService {
             lecture = withRawTranscript(lecture, storage.resolve(lectureId, "transcript.json"));
 
             // 3. Text processing (LLM)
+            if (!llm.isAvailable()) {
+                throw new LlmException("Локальная модель Ollama недоступна. Запустите Ollama и загрузите "
+                        + "модель (переменные OLLAMA_BASE_URL / OLLAMA_CHAT_MODEL).");
+            }
             lecture = advance(lecture, JobStatus.PROCESSING_TEXT);
             String cleaned = lecture.cleanTranscript()
                     ? textProcessing.cleanTranscript(transcript.segments(), options)
