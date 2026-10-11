@@ -14,10 +14,16 @@ public record ChatProperties(
         Security security,
         Limits limits) {
 
-    public record Ollama(String baseUrl, String model, Duration timeout) {
+    /**
+     * @param think whether the model should emit its reasoning trace. Disabled
+     *              by default because on CPU-only hosts Qwen3 thinking roughly
+     *              doubles (or worse) the response time and the trace is not
+     *              shown to the user.
+     */
+    public record Ollama(String baseUrl, String model, Duration timeout, Boolean think) {
     }
 
-    public record Security(String apiKey) {
+    public record Security(String apiKey, boolean trustForwardedFor) {
     }
 
     public record Limits(

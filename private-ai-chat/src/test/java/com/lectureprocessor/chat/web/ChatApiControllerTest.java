@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.lectureprocessor.chat.llm.LlmUnavailableException;
 import com.lectureprocessor.chat.ratelimit.RateLimiter;
+import com.lectureprocessor.chat.security.ClientIdResolver;
 import com.lectureprocessor.chat.service.ChatService;
 import com.lectureprocessor.chat.support.ChatTestProperties;
 
@@ -29,7 +30,8 @@ class ChatApiControllerTest {
     void setUp() {
         chatService = mock(ChatService.class);
         rateLimiter = new RateLimiter(ChatTestProperties.defaults());
-        ChatApiController controller = new ChatApiController(chatService, rateLimiter);
+        ChatApiController controller = new ChatApiController(chatService, rateLimiter,
+                new ClientIdResolver(ChatTestProperties.defaults()));
         mockMvc = MockMvcBuilders.standaloneSetup(controller)
                 .setControllerAdvice(new ApiExceptionHandler())
                 .build();

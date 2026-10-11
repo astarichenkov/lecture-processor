@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lectureprocessor.chat.ratelimit.RateLimiter;
+import com.lectureprocessor.chat.security.ClientIdResolver;
 import com.lectureprocessor.chat.service.ChatService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,10 +26,12 @@ public class ChatApiController {
 
     private final ChatService chatService;
     private final RateLimiter rateLimiter;
+    private final ClientIdResolver clientIdResolver;
 
-    public ChatApiController(ChatService chatService, RateLimiter rateLimiter) {
+    public ChatApiController(ChatService chatService, RateLimiter rateLimiter, ClientIdResolver clientIdResolver) {
         this.chatService = chatService;
         this.rateLimiter = rateLimiter;
+        this.clientIdResolver = clientIdResolver;
     }
 
     @GetMapping("/health")
@@ -41,7 +44,7 @@ public class ChatApiController {
 
     @PostMapping("/chat")
     public ResponseEntity<ChatResponse> chat(@RequestBody ChatRequest request, HttpServletRequest http) {
-        if (!rateLimiter.tryAcquire(clientId(http))) {
+        if (!rateLimiter.tryAcquire(clientIdResolver.resolve(http))) {
             throw new com.lectureprocessor.chat.ratelimit.RateLimitExceededException();
         }
         String sessionId = request.sessionId() == null || request.sessionId().isBlank()
@@ -49,14 +52,6 @@ public class ChatApiController {
                 : request.sessionId();
         String answer = chatService.ask(sessionId, request.message());
         return ResponseEntity.ok(new ChatResponse(sessionId, answer));
-    }
-
-    static String clientId(HttpServletRequest request) {
-        String forwarded = request.getHeader("X-Forwarded-For");
-        if (forwarded != null && !forwarded.isBlank()) {
-            return forwarded.split(",")[0].strip();
-        }
-        return request.getRemoteAddr();
     }
 
     public record ChatRequest(String sessionId, String message) {

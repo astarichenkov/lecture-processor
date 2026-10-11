@@ -11,13 +11,13 @@ public final class ChatTestProperties {
 
     public static ChatProperties defaults() {
         return new ChatProperties(
-                new ChatProperties.Ollama("http://localhost:11434", "qwen3:1.7b", Duration.ofSeconds(5)),
-                new ChatProperties.Security(""),
+                new ChatProperties.Ollama("http://localhost:11434", "qwen3:1.7b", Duration.ofSeconds(5), false),
+                new ChatProperties.Security("", false),
                 new ChatProperties.Limits(5, 100, 4096, 64, 6, 2));
     }
 
     public static ChatProperties withApiKey(String key) {
         ChatProperties base = defaults();
-        return new ChatProperties(base.ollama(), new ChatProperties.Security(key), base.limits());
+        return new ChatProperties(base.ollama(), new ChatProperties.Security(key, false), base.limits());
     }
 }

@@ -38,12 +38,7 @@ public class OllamaLlmClient implements LlmClient {
         OllamaApi api = OllamaApi.builder().baseUrl(properties.ollama().baseUrl()).build();
         this.chatModel = OllamaChatModel.builder()
                 .ollamaApi(api)
-                .options(OllamaChatOptions.builder()
-                        .model(properties.ollama().model())
-                        .numCtx(properties.limits().maxContextTokens())
-                        .numPredict(properties.limits().maxOutputTokens())
-                        .temperature(0.3)
-                        .build())
+                .options(options(properties.limits().maxOutputTokens(), properties.limits().maxContextTokens()).build())
                 .build();
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
         factory.setConnectTimeout(Duration.ofSeconds(3));
@@ -70,11 +65,7 @@ public class OllamaLlmClient implements LlmClient {
 
         try {
             String content = ChatClient.create(chatModel).prompt()
-                    .options(OllamaChatOptions.builder()
-                            .model(properties.ollama().model())
-                            .numCtx(maxContextTokens)
-                            .numPredict(maxOutputTokens)
-                            .temperature(0.3))
+                    .options(options(maxOutputTokens, maxContextTokens))
                     .messages(messages)
                     .call()
                     .content();
@@ -88,6 +79,25 @@ public class OllamaLlmClient implements LlmClient {
             log.warn("Ollama generation failed: {}", e.getMessage());
             throw new LlmUnavailableException("Локальная модель недоступна", e);
         }
+    }
+
+    /**
+     * Builds per-request Ollama options. Thinking is disabled unless explicitly
+     * enabled via {@code app.ollama.think=true}; on CPU it costs a lot of time
+     * and its trace is never returned to the caller.
+     */
+    private OllamaChatOptions.Builder options(int maxOutputTokens, int maxContextTokens) {
+        OllamaChatOptions.Builder builder = OllamaChatOptions.builder()
+                .model(properties.ollama().model())
+                .numCtx(maxContextTokens)
+                .numPredict(maxOutputTokens)
+                .temperature(0.3);
+        if (Boolean.TRUE.equals(properties.ollama().think())) {
+            builder.enableThinking();
+        } else {
+            builder.disableThinking();
+        }
+        return builder;
     }
 
     @Override
