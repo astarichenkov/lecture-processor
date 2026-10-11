@@ -1,69 +1,121 @@
 # Homelab deployment — private AI chat (Day 30)
 
-Target: CPU-only mini-PC/server (e.g. Intel i5-10500, 16 GB RAM).
-Services: Ollama (loopback) + `private-ai-chat` Spring Boot service.
+Real deployment of the `private-ai-chat` module on a dedicated CPU-only
+Debian 12 LXC (`private-ai`, `203.0.113.10`). Native systemd, no Docker.
 
-> No successful deployment on the homelab is claimed from the development
-> environment. Run these steps on the server after verifying access.
-
-## 1. Detect the OS and prerequisites
-
-```bash
-./install.sh detect
+```
+LAN client
+  │  :8080            (0.0.0.0, requires X-API-Key for /api/chat)
+  ▼
+Spring Boot private-ai-chat   (systemd: private-ai.service, user private-ai)
+  │  :11434           (127.0.0.1 only)
+  ▼
+Ollama  →  qwen3:1.7b   (CPU inference)
 ```
 
-## 2. Install Ollama and the model
+Security invariants:
+
+- Ollama binds to `127.0.0.1:11434` and must never be reachable from the LAN.
+- The API (`POST /api/chat`) requires `X-API-Key` / `Authorization: Bearer`.
+- `GET /api/health` and the browser UI on `/` stay open on the private LAN.
+- No secret in the repository; the key lives in `/etc/private-ai/private-ai.env`
+  (`chmod 600`, root-owned).
+- No router port forwarding; private LAN only.
+
+## Files
+
+| File | Purpose |
+|------|---------|
+| `install.sh` | Idempotent host preparation: Java 25, Ollama (+ loopback drop-in), model, service user/dirs. |
+| `deploy.sh` | Installs the JAR, production config, generated API key and the systemd unit. |
+| `verify.sh` | Real acceptance checks: health, auth, input limit, chat, context, rate limit, Ollama isolation. |
+| `private-ai.service.template` | systemd unit for the chat service. |
+| `ollama-override.conf.template` | systemd drop-in that pins Ollama to loopback and single-worker CPU. |
+
+## 1. Prepare the host
+
+Copy the `deployment/homelab` directory to the server, then:
 
 ```bash
-./install.sh ollama           # installs Ollama if missing
-ollama pull qwen3:1.7b        # or qwen3:0.6b as fallback
+sudo ./install.sh all        # detect, Java 25, Ollama, qwen3:1.7b, user/dirs
 ```
 
-Keep Ollama on loopback (default `127.0.0.1:11434`). Do **not** expose 11434
-publicly and do not add router port-forwarding.
+Individual steps: `detect`, `java`, `ollama`, `model`, `dirs`.
 
-## 3. Build the service
-
-On a machine with JDK 25:
+## 2. Build the JAR (on a machine with JDK 25)
 
 ```bash
-./mvnw -pl private-ai-chat package -DskipTests
+JAVA_HOME=/path/to/jdk-25 ./mvnw -pl private-ai-chat -am package -DskipTests
+# -> private-ai-chat/target/private-ai-chat-1.0.0-SNAPSHOT.jar
 ```
 
-Copy `private-ai-chat/target/private-ai-chat-1.0.0-SNAPSHOT.jar` to the server
-(or build there).
+Or run the full regression suite: `./mvnw verify`.
 
-## 4. Run
+## 3. Deploy
+
+Transfer the JAR plus this directory to the server and run:
 
 ```bash
-export CHAT_API_KEY="$(openssl rand -hex 16)"
-export CHAT_BIND_ADDRESS=127.0.0.1     # or a trusted LAN/VPN interface
-export OLLAMA_BASE_URL=http://localhost:11434
-export CHAT_MODEL=qwen3:1.7b
-java -jar private-ai-chat-1.0.0-SNAPSHOT.jar
+sudo ./deploy.sh /path/to/private-ai-chat-1.0.0-SNAPSHOT.jar
 ```
 
-## 5. Optional: Docker Compose
+`deploy.sh` writes:
+
+- `/opt/private-ai/private-ai-chat.jar` (service-owned, 0640)
+- `/etc/private-ai/application.yml` (production limits, bind `0.0.0.0:8080`)
+- `/etc/private-ai/private-ai.env` (generated `CHAT_API_KEY`, 0600, never printed)
+- `/etc/systemd/system/private-ai.service`
+
+then reloads systemd, enables and (re)starts the service and waits for health.
+
+The API key is only ever stored in `/etc/private-ai/private-ai.env`. To use it
+from a shell on the server:
 
 ```bash
-docker compose -f deployment/homelab/compose.yaml up -d
+. /etc/private-ai/private-ai.env
 ```
 
-Ollama stays on the internal network; only the chat service port is published,
-and it should be bound to a trusted interface.
+## 4. Verify
 
-## 6. Verify
+From the server:
 
 ```bash
-./verify.sh http://127.0.0.1:8081 "$CHAT_API_KEY"
+sudo /path/to/verify.sh http://127.0.0.1:8080
 ```
 
-Checks: health, authenticated chat, oversized request (400), rate limit (429),
-and unauthenticated access (401).
+From a LAN client (replace `<key>`):
 
-## Security checklist
+```bash
+curl -H "X-API-Key: <key>" http://203.0.113.10:8080/api/health
+curl -H "X-API-Key: <key>" -H "Content-Type: application/json" \
+     -d '{"message":"привет"}' http://203.0.113.10:8080/api/chat
+```
 
-- [ ] Ollama listens only on loopback.
-- [ ] `11434` not exposed to the internet, no public port forwarding.
-- [ ] `CHAT_API_KEY` set and stored outside the repository.
-- [ ] Service bound to a trusted interface or reachable only via VPN.
+Port expectations from the LAN:
+
+| Port | Expected |
+|------|----------|
+| 22   | OPEN |
+| 8080 | OPEN |
+| 11434 | CLOSED / REFUSED |
+
+If a non-rate-limit check unexpectedly returns `429`, the 60 s fixed window was
+already consumed — wait a minute and re-run.
+
+## 5. Operations
+
+```bash
+systemctl status ollama private-ai
+journalctl -u private-ai -f
+systemctl restart ollama private-ai
+systemctl is-enabled ollama private-ai
+```
+
+Heap: `-Xms128m -Xmx512m` (see `private-ai.service.template`). Ollama keeps the
+model loaded for 10 minutes (`OLLAMA_KEEP_ALIVE=10m`).
+
+## 6. Optional Docker Compose (not used in the real deployment)
+
+`compose.yaml` and `Dockerfile` are kept for a container-based alternative. The
+verified Day 30 deployment is native systemd; see
+`docs/DAY30_REAL_DEPLOYMENT_REPORT.md`.
